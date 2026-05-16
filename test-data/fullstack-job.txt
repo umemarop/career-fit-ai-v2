@@ -1,0 +1,31 @@
+Full Stack Developer
+
+We are hiring a Full Stack Developer to work across our web application, backend APIs, and database layer. You will contribute to product features from planning through implementation and deployment.
+
+Responsibilities:
+- Build frontend features using React and TypeScript
+- Develop backend APIs using Node.js and Express
+- Design and maintain PostgreSQL database schemas
+- Integrate frontend pages with backend services
+- Implement validation, authentication, and error handling
+- Participate in technical discussions and code reviews
+- Improve application performance and maintainability
+
+Required skills:
+- React
+- TypeScript
+- Node.js
+- Express
+- PostgreSQL
+- REST APIs
+- Git
+
+Preferred skills:
+- Next.js
+- Prisma
+- Docker
+- Tailwind CSS
+- Testing experience
+- Cloud deployment experience
+
+This role suits a junior to mid-level developer who is comfortable working across both frontend and backend parts of a web application.

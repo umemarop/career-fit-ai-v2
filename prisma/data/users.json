@@ -1,0 +1,73 @@
+[
+  {
+    "email": "alex.johnson@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "emma.williams@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "liam.brown@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "olivia.jones@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "noah.garcia@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "ava.martinez@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "william.rodriguez@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "sophia.hernandez@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "james.lopez@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "isabella.gonzalez@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "benjamin.wilson@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "mia.anderson@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "lucas.thomas@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  {
+    "email": "amelia.taylor@test.com",
+    "password": "Password123!",
+    "role": "USER"
+  },
+  { "email": "admin@test.com", "password": "Admin1234!", "role": "ADMIN" }
+]

@@ -1,0 +1,29 @@
+Frontend Developer
+
+We are looking for a Frontend Developer to join our product team. You will build responsive, accessible, and user-friendly web applications used by customers across Australia.
+
+Responsibilities:
+- Build reusable UI components using React and TypeScript
+- Work closely with designers to implement responsive layouts
+- Integrate frontend applications with REST APIs
+- Improve performance, accessibility, and usability
+- Write clean, maintainable code and participate in code reviews
+- Collaborate with backend developers and product managers
+
+Required skills:
+- React
+- TypeScript
+- JavaScript
+- HTML
+- CSS
+- REST API integration
+- Git
+
+Preferred skills:
+- Next.js
+- Tailwind CSS
+- Testing Library
+- Basic understanding of CI/CD
+- Experience with design systems
+
+This role is suitable for a junior to mid-level developer who has built real projects and can explain frontend decisions clearly.

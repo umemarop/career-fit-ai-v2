@@ -1,0 +1,265 @@
+[
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "Backend Developer",
+    "companyName": "TechCorp",
+    "location": "Brisbane",
+    "jobDescription": "Looking for a Node.js backend developer with API and database experience.",
+    "fitScore": 85,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["Node.js", "PostgreSQL", "TypeScript"],
+      "missingSkills": ["AWS", "Docker"],
+      "strengths": [
+        "Strong backend API development",
+        "Good database design skills"
+      ],
+      "risks": ["Limited cloud deployment experience"],
+      "resumeTips": [
+        "Highlight backend project impact",
+        "Add metrics (e.g. API response time improvements)"
+      ],
+      "actionPlan": [
+        "Learn AWS basics",
+        "Deploy a project using Docker",
+        "Practice system design"
+      ]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "Frontend Developer",
+    "companyName": "PixelWorks",
+    "location": "Sydney",
+    "jobDescription": "React frontend developer role focused on building responsive dashboards with TypeScript.",
+    "fitScore": 62,
+    "recommendation": "CONSIDER",
+    "result": {
+      "matchedSkills": ["React", "TypeScript"],
+      "missingSkills": ["Testing", "Accessibility"],
+      "strengths": [
+        "Good frontend fundamentals",
+        "Comfortable with React components"
+      ],
+      "risks": ["Limited testing experience"],
+      "resumeTips": [
+        "Add React dashboard projects",
+        "Mention responsive UI work"
+      ],
+      "actionPlan": [
+        "Practice Jest and React Testing Library",
+        "Improve accessibility basics"
+      ]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "Cloud Backend Developer",
+    "companyName": "CloudNest",
+    "location": "Brisbane",
+    "jobDescription": "Backend role using Node.js, PostgreSQL, Docker, and AWS deployment workflows.",
+    "fitScore": 78,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["Node.js", "PostgreSQL", "TypeScript"],
+      "missingSkills": ["AWS", "Docker"],
+      "strengths": [
+        "Strong API development",
+        "Good relational database understanding"
+      ],
+      "risks": ["Needs stronger cloud deployment examples"],
+      "resumeTips": [
+        "Highlight API projects",
+        "Add deployment experience to resume"
+      ],
+      "actionPlan": ["Deploy one Node.js app to AWS", "Practice Docker basics"]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "Junior Data Engineer",
+    "companyName": "DataBridge",
+    "location": "Melbourne",
+    "jobDescription": "Entry-level data engineering role using Python, SQL, ETL pipelines, and cloud data tools.",
+    "fitScore": 48,
+    "recommendation": "NOT_RECOMMENDED",
+    "result": {
+      "matchedSkills": ["SQL", "Python"],
+      "missingSkills": ["ETL", "Airflow", "Data Warehousing"],
+      "strengths": ["Basic database knowledge", "Some Python familiarity"],
+      "risks": ["Role is more data-focused than backend-focused"],
+      "resumeTips": ["Add data pipeline projects if targeting this role"],
+      "actionPlan": ["Build a small ETL project", "Learn data warehouse basics"]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "NestJS API Engineer",
+    "companyName": "ApiForge",
+    "location": "Perth",
+    "jobDescription": "NestJS API engineer needed for authentication, REST APIs, Prisma, and PostgreSQL services.",
+    "fitScore": 88,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["TypeScript", "Node.js", "PostgreSQL", "Prisma"],
+      "missingSkills": ["Advanced NestJS", "CI/CD"],
+      "strengths": [
+        "Strong backend TypeScript foundation",
+        "Relevant Prisma and API experience"
+      ],
+      "risks": ["Could improve production deployment knowledge"],
+      "resumeTips": [
+        "Highlight auth and Prisma work",
+        "Mention API validation and error handling"
+      ],
+      "actionPlan": ["Build a NestJS CRUD API", "Add CI/CD pipeline practice"]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "DevOps Engineer",
+    "companyName": "InfraMate",
+    "location": "Adelaide",
+    "jobDescription": "DevOps role focused on Kubernetes, Terraform, CI/CD pipelines, AWS, and monitoring.",
+    "fitScore": 40,
+    "recommendation": "NOT_RECOMMENDED",
+    "result": {
+      "matchedSkills": ["Docker", "AWS basics"],
+      "missingSkills": ["Kubernetes", "Terraform", "Monitoring", "CI/CD"],
+      "strengths": ["Some deployment awareness"],
+      "risks": ["Role requires deeper infrastructure experience"],
+      "resumeTips": ["Do not prioritize this role unless targeting DevOps"],
+      "actionPlan": [
+        "Learn CI/CD fundamentals",
+        "Build a basic AWS deployment pipeline"
+      ]
+    }
+  },
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobTitle": "Full Stack TypeScript Developer",
+    "companyName": "Buildly",
+    "location": "Brisbane",
+    "jobDescription": "Full stack TypeScript role using React, Node.js, Prisma, PostgreSQL, and REST API development.",
+    "fitScore": 74,
+    "recommendation": "CONSIDER",
+    "result": {
+      "matchedSkills": ["React", "Node.js", "TypeScript", "Prisma"],
+      "missingSkills": ["Testing", "Production deployment"],
+      "strengths": ["Good match across frontend and backend fundamentals"],
+      "risks": ["Needs more full-stack production examples"],
+      "resumeTips": [
+        "Showcase a full-stack project",
+        "Add testing and deployment details"
+      ],
+      "actionPlan": [
+        "Finish one polished full-stack app",
+        "Add automated tests"
+      ]
+    }
+  },
+  {
+    "userEmail": "emma.williams@test.com",
+    "jobTitle": "Full Stack Developer",
+    "companyName": "StartupX",
+    "location": "Sydney",
+    "jobDescription": "React + Node.js full stack role.",
+    "fitScore": 70,
+    "recommendation": "NOT_RECOMMENDED",
+    "result": {
+      "matchedSkills": ["React", "JavaScript"],
+      "missingSkills": ["TypeScript", "Testing"],
+      "strengths": ["Strong UI/UX sense", "Good React fundamentals"],
+      "risks": ["Weak backend experience"],
+      "resumeTips": ["Add backend projects", "Include testing experience"],
+      "actionPlan": [
+        "Learn TypeScript",
+        "Build full-stack project",
+        "Practice Jest testing"
+      ]
+    }
+  },
+  {
+    "userEmail": "liam.brown@test.com",
+    "jobTitle": "Backend Engineer",
+    "companyName": "DataFlow",
+    "location": "Melbourne",
+    "jobDescription": "Python backend role using FastAPI.",
+    "fitScore": 90,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["Python", "FastAPI", "PostgreSQL"],
+      "missingSkills": ["Kubernetes"],
+      "strengths": ["Excellent backend development", "Strong API design"],
+      "risks": ["Limited DevOps exposure"],
+      "resumeTips": [
+        "Highlight scalability projects",
+        "Mention API performance optimization"
+      ],
+      "actionPlan": ["Learn Kubernetes basics", "Deploy microservices project"]
+    }
+  },
+  {
+    "userEmail": "noah.garcia@test.com",
+    "jobTitle": "Backend Developer",
+    "companyName": "Cloudify",
+    "location": "Perth",
+    "jobDescription": "NestJS backend with cloud integration.",
+    "fitScore": 65,
+    "recommendation": "CONSIDER",
+    "result": {
+      "matchedSkills": ["TypeScript", "NestJS"],
+      "missingSkills": ["AWS", "CI/CD"],
+      "strengths": ["Good TypeScript understanding"],
+      "risks": ["No cloud deployment experience"],
+      "resumeTips": ["Add cloud projects", "Highlight backend APIs"],
+      "actionPlan": ["Learn AWS EC2 & S3", "Set up CI/CD pipeline"]
+    }
+  },
+  {
+    "userEmail": "william.rodriguez@test.com",
+    "jobTitle": "Senior Backend Engineer",
+    "companyName": "ScaleTech",
+    "location": "Sydney",
+    "jobDescription": "Distributed backend systems and scaling.",
+    "fitScore": 92,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["Node.js", "Redis", "Docker"],
+      "missingSkills": ["Kafka"],
+      "strengths": [
+        "Strong system architecture knowledge",
+        "Experience in scaling services"
+      ],
+      "risks": ["Limited streaming experience"],
+      "resumeTips": [
+        "Highlight distributed systems experience",
+        "Mention performance tuning"
+      ],
+      "actionPlan": ["Learn Kafka", "Build event-driven system"]
+    }
+  },
+  {
+    "userEmail": "admin@test.com",
+    "jobTitle": "Technical Lead",
+    "companyName": "CareerFit",
+    "location": "Brisbane",
+    "jobDescription": "Lead backend architecture and team.",
+    "fitScore": 95,
+    "recommendation": "APPLY",
+    "result": {
+      "matchedSkills": ["System Design", "Node.js", "Leadership"],
+      "missingSkills": [],
+      "strengths": ["Strong leadership", "Excellent architecture design"],
+      "risks": [],
+      "resumeTips": [
+        "Highlight leadership experience",
+        "Include team achievements"
+      ],
+      "actionPlan": [
+        "Mentor junior developers",
+        "Refine system design knowledge"
+      ]
+    }
+  }
+]

@@ -1,0 +1,118 @@
+[
+  {
+    "userEmail": "alex.johnson@test.com",
+    "jobAnalysisIndex": 0,
+    "jobTitle": "Backend Developer",
+    "companyName": "TechCorp",
+    "location": "Brisbane",
+    "jobUrl": "https://example.com/jobs/techcorp-backend-developer",
+    "status": "APPLIED",
+    "notes": "Created from AI analysis. Strong match, already applied.",
+    "nextStep": "Prepare for recruiter phone screen.",
+    "appliedAt": "2026-04-20T09:30:00.000Z"
+  },
+  {
+    "userEmail": "emma.williams@test.com",
+    "jobAnalysisIndex": 1,
+    "jobTitle": "Full Stack Developer",
+    "companyName": "StartupX",
+    "location": "Sydney",
+    "jobUrl": "https://example.com/jobs/startupx-fullstack-developer",
+    "status": "SAVED",
+    "notes": "Created from AI analysis. Need to improve TypeScript before applying.",
+    "nextStep": "Review TypeScript requirements and decide whether to apply.",
+    "appliedAt": null
+  },
+  {
+    "userEmail": "liam.brown@test.com",
+    "jobAnalysisIndex": 2,
+    "jobTitle": "Backend Engineer",
+    "companyName": "DataFlow",
+    "location": "Melbourne",
+    "jobUrl": "https://example.com/jobs/dataflow-backend-engineer",
+    "status": "INTERVIEWING",
+    "notes": "AI score was high. First interview scheduled.",
+    "nextStep": "Prepare examples for API design and database optimization.",
+    "appliedAt": "2026-04-18T14:00:00.000Z"
+  },
+  {
+    "userEmail": "noah.garcia@test.com",
+    "jobAnalysisIndex": 3,
+    "jobTitle": "Backend Developer",
+    "companyName": "Cloudify",
+    "location": "Perth",
+    "jobUrl": "https://example.com/jobs/cloudify-backend-developer",
+    "status": "SAVED",
+    "notes": "Considering after improving AWS knowledge.",
+    "nextStep": "Study AWS deployment basics before applying.",
+    "appliedAt": null
+  },
+  {
+    "userEmail": "william.rodriguez@test.com",
+    "jobAnalysisIndex": 4,
+    "jobTitle": "Senior Backend Engineer",
+    "companyName": "ScaleTech",
+    "location": "Sydney",
+    "jobUrl": "https://example.com/jobs/scaletech-senior-backend-engineer",
+    "status": "OFFER",
+    "notes": "Created from AI analysis. Offer received after final interview.",
+    "nextStep": "Review offer details and compare compensation package.",
+    "appliedAt": "2026-04-10T11:15:00.000Z"
+  },
+  {
+    "userEmail": "admin@test.com",
+    "jobAnalysisIndex": 5,
+    "jobTitle": "Technical Lead",
+    "companyName": "CareerFit",
+    "location": "Brisbane",
+    "jobUrl": "https://example.com/jobs/careerfit-technical-lead",
+    "status": "APPLIED",
+    "notes": "Created from AI analysis for admin testing.",
+    "nextStep": "Wait for internal review result.",
+    "appliedAt": "2026-04-22T08:00:00.000Z"
+  },
+  {
+    "userEmail": "ava.martinez@test.com",
+    "jobTitle": "Frontend Developer",
+    "companyName": "DesignHub",
+    "location": "Gold Coast",
+    "jobUrl": "https://example.com/jobs/designhub-frontend-developer",
+    "status": "WITHDRAWN",
+    "notes": "Manually added by user. User withdrew after accepting another opportunity.",
+    "nextStep": null,
+    "appliedAt": "2026-04-11T09:00:00.000Z"
+  },
+  {
+    "userEmail": "isabella.gonzalez@test.com",
+    "jobTitle": "Junior Frontend Developer",
+    "companyName": "WebCraft",
+    "location": "Adelaide",
+    "jobUrl": "https://example.com/jobs/webcraft-junior-frontend",
+    "status": "APPLIED",
+    "notes": "Manually tracked application from job board.",
+    "nextStep": "Follow up if there is no response within one week.",
+    "appliedAt": "2026-04-21T10:45:00.000Z"
+  },
+  {
+    "userEmail": "benjamin.wilson@test.com",
+    "jobTitle": "Backend Developer",
+    "companyName": "HealthSoft",
+    "location": "Canberra",
+    "jobUrl": "https://example.com/jobs/healthsoft-backend-developer",
+    "status": "REJECTED",
+    "notes": "Manual application. Rejected after resume screening.",
+    "nextStep": "Review resume keywords and improve backend project descriptions.",
+    "appliedAt": "2026-04-12T13:20:00.000Z"
+  },
+  {
+    "userEmail": "mia.anderson@test.com",
+    "jobTitle": "Frontend Engineer",
+    "companyName": "EduTech Labs",
+    "location": "Hobart",
+    "jobUrl": "https://example.com/jobs/edutech-frontend-engineer",
+    "status": "INTERVIEWING",
+    "notes": "Manual application. Technical interview pending.",
+    "nextStep": "Prepare React performance optimization examples.",
+    "appliedAt": "2026-04-17T16:10:00.000Z"
+  }
+]

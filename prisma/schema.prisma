@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  profile      Profile?
+  jobAnalyses  JobAnalysis[]
+  applications Application[]
+}
+
+model Profile {
+  id        String  @id @default(uuid())
+  userId    String  @unique
+  avatarUrl String?
+
+  skills          String[]
+  experienceLevel ExperienceLevel
+  workEligibility WorkEligibility?
+  location        String?
+  targetRole      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model JobAnalysis {
+  id             String  @id @default(uuid())
+  userId         String
+  jobTitle       String
+  companyName    String?
+  location       String?
+  jobDescription String
+
+  fitScore       Int
+  recommendation Recommendation
+  result         Json
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application Application?
+}
+
+model Application {
+  id            String  @id @default(uuid())
+  userId        String
+  jobAnalysisId String? @unique
+
+  jobTitle    String
+  companyName String?
+  location    String?
+  jobUrl      String?
+
+  status    ApplicationStatus @default(SAVED)
+  notes     String?
+  nextStep  String?
+  appliedAt DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobAnalysis JobAnalysis? @relation(fields: [jobAnalysisId], references: [id], onDelete: SetNull)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ExperienceLevel {
+  ENTRY
+  JUNIOR
+  MID
+  SENIOR
+}
+
+enum WorkEligibility {
+  FULL_WORK_RIGHTS
+  LIMITED_WORK_RIGHTS
+  NEEDS_SPONSORSHIP
+  NOT_SURE
+}
+
+enum Recommendation {
+  APPLY
+  CONSIDER
+  NOT_RECOMMENDED
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  INTERVIEWING
+  OFFER
+  REJECTED
+  WITHDRAWN
+}

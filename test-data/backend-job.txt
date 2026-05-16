@@ -1,0 +1,31 @@
+Backend Developer
+
+We are seeking a Backend Developer to help build and maintain scalable APIs for our SaaS platform. You will work on server-side business logic, database design, authentication, and integrations with third-party services.
+
+Responsibilities:
+- Design and develop RESTful APIs using Node.js and Express
+- Build database models and queries using PostgreSQL
+- Implement authentication and authorization
+- Write clean and testable backend code
+- Handle validation, error handling, and logging
+- Work with Docker-based local development environments
+- Collaborate with frontend developers to support product features
+
+Required skills:
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- REST APIs
+- Authentication
+- Git
+
+Preferred skills:
+- Prisma
+- Docker
+- Redis
+- AWS
+- Unit testing
+- CI/CD pipelines
+
+This role is ideal for a developer who understands backend fundamentals and wants to work on production-grade API systems.

@@ -1,0 +1,137 @@
+[
+  {
+    "userEmail": "alex.johnson@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=1",
+    "skills": ["Node.js", "TypeScript", "Express", "PostgreSQL"],
+    "experienceLevel": "JUNIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Brisbane",
+    "targetRole": "Backend Developer"
+  },
+  {
+    "userEmail": "emma.williams@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=2",
+    "skills": ["JavaScript", "React", "Node.js", "MongoDB"],
+    "experienceLevel": "ENTRY",
+    "workEligibility": "LIMITED_WORK_RIGHTS",
+    "location": "Sydney",
+    "targetRole": "Full Stack Developer"
+  },
+  {
+    "userEmail": "liam.brown@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=3",
+    "skills": ["Python", "FastAPI", "PostgreSQL", "Docker"],
+    "experienceLevel": "MID",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Melbourne",
+    "targetRole": "Backend Engineer"
+  },
+  {
+    "userEmail": "olivia.jones@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=4",
+    "skills": ["Java", "Spring Boot", "MySQL", "AWS"],
+    "experienceLevel": "MID",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Brisbane",
+    "targetRole": "Software Engineer"
+  },
+  {
+    "userEmail": "noah.garcia@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=5",
+    "skills": ["TypeScript", "NestJS", "Prisma", "PostgreSQL"],
+    "experienceLevel": "JUNIOR",
+    "workEligibility": "NEEDS_SPONSORSHIP",
+    "location": "Perth",
+    "targetRole": "Backend Developer"
+  },
+  {
+    "userEmail": "ava.martinez@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=6",
+    "skills": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    "experienceLevel": "JUNIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Gold Coast",
+    "targetRole": "Frontend Developer"
+  },
+  {
+    "userEmail": "william.rodriguez@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=7",
+    "skills": ["Node.js", "GraphQL", "Redis", "Docker"],
+    "experienceLevel": "SENIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Sydney",
+    "targetRole": "Senior Backend Engineer"
+  },
+  {
+    "userEmail": "sophia.hernandez@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=8",
+    "skills": ["C#", ".NET", "SQL Server", "Azure"],
+    "experienceLevel": "MID",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Melbourne",
+    "targetRole": "Software Developer"
+  },
+  {
+    "userEmail": "james.lopez@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=9",
+    "skills": ["Go", "Kubernetes", "PostgreSQL", "AWS"],
+    "experienceLevel": "SENIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Brisbane",
+    "targetRole": "Platform Engineer"
+  },
+  {
+    "userEmail": "isabella.gonzalez@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=10",
+    "skills": ["HTML", "CSS", "JavaScript", "React"],
+    "experienceLevel": "ENTRY",
+    "workEligibility": "NOT_SURE",
+    "location": "Adelaide",
+    "targetRole": "Junior Frontend Developer"
+  },
+  {
+    "userEmail": "benjamin.wilson@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=11",
+    "skills": ["Python", "Django", "PostgreSQL", "Celery"],
+    "experienceLevel": "MID",
+    "workEligibility": "LIMITED_WORK_RIGHTS",
+    "location": "Canberra",
+    "targetRole": "Backend Developer"
+  },
+  {
+    "userEmail": "mia.anderson@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=12",
+    "skills": ["Vue.js", "Nuxt", "TypeScript", "Firebase"],
+    "experienceLevel": "JUNIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Hobart",
+    "targetRole": "Frontend Engineer"
+  },
+  {
+    "userEmail": "lucas.thomas@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=13",
+    "skills": ["Node.js", "Express", "MongoDB", "JWT"],
+    "experienceLevel": "ENTRY",
+    "workEligibility": "NEEDS_SPONSORSHIP",
+    "location": "Darwin",
+    "targetRole": "Junior Backend Developer"
+  },
+  {
+    "userEmail": "amelia.taylor@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=14",
+    "skills": ["Ruby", "Rails", "PostgreSQL", "RSpec"],
+    "experienceLevel": "MID",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Brisbane",
+    "targetRole": "Full Stack Developer"
+  },
+  {
+    "userEmail": "admin@test.com",
+    "avatarUrl": "https://i.pravatar.cc/150?img=15",
+    "skills": ["Node.js", "TypeScript", "PostgreSQL", "System Design"],
+    "experienceLevel": "SENIOR",
+    "workEligibility": "FULL_WORK_RIGHTS",
+    "location": "Brisbane",
+    "targetRole": "Technical Lead"
+  }
+]
