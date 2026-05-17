@@ -1,9 +1,6 @@
 import express from "express";
 import morgan from "morgan";
 
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./docs/swagger.js";
-
 import { AppError } from "./utils/appError.js";
 import { errorController } from "./middlewares/error.middleware.js";
 
@@ -17,8 +14,6 @@ export const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
@@ -31,7 +26,8 @@ app.get("/", (req, res) => {
       application: "/api/v1/application",
     },
   });
-});
+});1
+
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/profile", profileRouter);

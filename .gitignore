@@ -4,7 +4,7 @@ node_modules
 # environment variables
 .env
 .env.test
-.env.local
+.env.docker
 .env.development
 .env.production
 
