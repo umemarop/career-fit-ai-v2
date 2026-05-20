@@ -1,11 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
-import type {
-  RegisterInput,
-  LoginInput,
-  RefreshTokenInput,
-  LogoutInput,
-} from "./auth.validation.js";
+import type { RegisterInput, LoginInput } from "./auth.validation.js";
 import {
   registerUser,
   loginUser,
@@ -18,6 +13,10 @@ import {
 import { catchAsync } from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
 import { getRequestMetadata } from "../../utils/requestMetadata.js";
+import {
+  refreshTokenCookieName,
+  refreshTokenCookieOptions,
+} from "../../config/cookie.js";
 
 export const register = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -38,22 +37,30 @@ export const login = catchAsync(
       req.validated?.body as LoginInput,
       metadata,
     );
+    res.cookie(refreshTokenCookieName, refreshToken, refreshTokenCookieOptions);
 
     res.status(200).json({
       status: "success",
       data: {
         user,
         accessToken,
-        refreshToken,
       },
     });
   },
 );
 
 export const logout = catchAsync(async (req: Request, res: Response) => {
-  const input: LogoutInput = req.body;
+  const refreshTokenFromCookie = req.cookies?.[refreshTokenCookieName];
 
-  await logoutCurrentSession(input);
+  const refreshToken = refreshTokenFromCookie ?? req.body?.refreshToken;
+
+  if (refreshToken) {
+    await logoutCurrentSession({
+      refreshToken,
+    });
+  }
+
+  res.clearCookie(refreshTokenCookieName, refreshTokenCookieOptions);
 
   res.status(200).json({
     status: "success",
@@ -73,6 +80,8 @@ export const logoutOthers = catchAsync(async (req, res) => {
 export const logoutAll = catchAsync(async (req: Request, res: Response) => {
   await logoutAllSessions(req.user!.id);
 
+  res.clearCookie(refreshTokenCookieName, refreshTokenCookieOptions);
+
   res.status(200).json({
     status: "success",
     message: "Logged out from all devices successfully",
@@ -80,13 +89,30 @@ export const logoutAll = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const refreshToken = catchAsync(async (req: Request, res: Response) => {
-  const input = req.body as RefreshTokenInput;
+  const refreshTokenFromCookie = req.cookies?.[refreshTokenCookieName];
 
-  const result = await refreshAccessToken(input);
+  const refreshToken = refreshTokenFromCookie ?? req.body?.refreshToken;
+
+  if (!refreshToken) {
+    throw new AppError("Refresh token is missing", 401);
+  }
+
+  const { accessToken, refreshToken: newRefreshToken } =
+    await refreshAccessToken({
+      refreshToken,
+    });
+
+  res.cookie(
+    refreshTokenCookieName,
+    newRefreshToken,
+    refreshTokenCookieOptions,
+  );
 
   res.status(200).json({
     status: "success",
-    data: result,
+    data: {
+      accessToken,
+    },
   });
 });
 
