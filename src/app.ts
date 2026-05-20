@@ -5,6 +5,7 @@ import { AppError } from "./utils/appError.js";
 import { errorController } from "./middlewares/error.middleware.js";
 
 import authRouter from "./modules/auth/auth.route.js";
+import sessionRoutes from "./modules/session/session.route.js";
 import profileRouter from "./modules/profile/profile.route.js";
 import jobAnalysisRouter from "./modules/jobAnalysis/jobAnalysis.route.js";
 import applicationRouter from "./modules/application/application.route.js";
@@ -17,22 +18,23 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
-    message: "CareerFit API is running 🚀",
-    version: "v1",
+    message: "CareerFit API v2 is running 🚀",
+    version: "v2",
     endpoints: {
-      auth: "/api/v1/auth",
-      profile: "/api/v1/profile",
-      jobAnalysis: "/api/v1/job-analysis",
-      application: "/api/v1/application",
+      auth: "/api/v2/auth",
+      sessions: "/api/v2/sessions",
+      profile: "/api/v2/profile",
+      jobAnalysis: "/api/v2/job-analysis",
+      application: "/api/v2/application",
     },
   });
-});1
+});
 
-
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/profile", profileRouter);
-app.use("/api/v1/job-analysis", jobAnalysisRouter);
-app.use("/api/v1/applications", applicationRouter);
+app.use("/api/v2/auth", authRouter);
+app.use("/api/v2/sessions", sessionRoutes);
+app.use("/api/v2/profile", profileRouter);
+app.use("/api/v2/job-analysis", jobAnalysisRouter);
+app.use("/api/v2/applications", applicationRouter);
 
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

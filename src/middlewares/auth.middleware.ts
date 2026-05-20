@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/appError.js";
-import { verifyToken } from "../utils/jwt.js";
+import { verifyAccessToken } from "../utils/token.js";
 import { prisma } from "../prisma/client.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
@@ -22,7 +22,7 @@ export const protect = catchAsync(
         ),
       );
     }
-    const decoded = verifyToken(token);
+    const decoded = verifyAccessToken(token);
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
@@ -43,6 +43,7 @@ export const protect = catchAsync(
     req.user = {
       id: user.id,
       role: user.role,
+      sessionId: decoded.sessionId,
     };
     next();
   },

@@ -29,6 +29,7 @@ async function readJSON(fileName: string) {
 export async function clearDatabase(): Promise<void> {
   console.log("🧹 Clearing database...");
 
+  await prisma.refreshToken.deleteMany();
   await prisma.application.deleteMany();
   await prisma.jobAnalysis.deleteMany();
   await prisma.profile.deleteMany();

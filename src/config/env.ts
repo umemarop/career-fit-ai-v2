@@ -13,6 +13,8 @@ const envSchema = z.object({
 
   JWT_EXPIRES_IN: z.string().min(1),
 
+  REFRESH_TOKEN_EXPIRES_IN_DAYS: z.coerce.number().default(30),
+
   GEMINI_API_KEY: z.string().min(1),
 
   CORS_ORIGIN: z.string().default("*"),

@@ -22,9 +22,35 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  profile      Profile?
-  jobAnalyses  JobAnalysis[]
-  applications Application[]
+  refreshTokens RefreshToken[]
+  profile       Profile?
+  jobAnalyses   JobAnalysis[]
+  applications  Application[]
+}
+
+model RefreshToken {
+  id        String @id @default(uuid())
+  tokenHash String @unique
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userAgent  String?
+  ipAddress  String?
+  browser    String?
+  os         String?
+  deviceType String?
+
+  expiresAt DateTime
+  revokedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@index([revokedAt])
+  @@index([expiresAt])
 }
 
 model Profile {
@@ -60,7 +86,7 @@ model JobAnalysis {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   application Application?
 }
 
