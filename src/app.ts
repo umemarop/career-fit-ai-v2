@@ -3,6 +3,7 @@ import morgan from "morgan";
 
 import { AppError } from "./utils/appError.js";
 import { errorController } from "./middlewares/error.middleware.js";
+import { env } from "./config/env.js";
 
 import authRouter from "./modules/auth/auth.route.js";
 import sessionRoutes from "./modules/session/session.route.js";
@@ -10,9 +11,31 @@ import profileRouter from "./modules/profile/profile.route.js";
 import jobAnalysisRouter from "./modules/jobAnalysis/jobAnalysis.route.js";
 import applicationRouter from "./modules/application/application.route.js";
 
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
+import hpp from "hpp";
+import compression from "compression";
+
 export const app = express();
 
-app.use(express.json());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
+
+app.use(
+  cors({
+    origin: env.CLIENT_URL,
+    credentials: true,
+  }),
+);
+
+app.use(compression());
+app.use(express.json({ limit: "1mb" }));
+app.use(cookieParser());
+app.use(hpp());
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
