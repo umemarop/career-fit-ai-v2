@@ -18,6 +18,14 @@ const envSchema = z.object({
   GEMINI_API_KEY: z.string().min(1),
 
   CLIENT_URL: z.string().min(1).default("http://localhost:5173"),
+
+  EMAIL_VERIFICATION_EXPIRES_MINUTES: z.coerce.number().positive(),
+
+  PASSWORD_RESET_EXPIRES_MINUTES: z.coerce.number().positive(),
+
+  RESEND_API_KEY: z.string().min(1),
+
+  EMAIL_FROM: z.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);
