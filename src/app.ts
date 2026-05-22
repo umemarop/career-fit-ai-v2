@@ -12,6 +12,7 @@ import "./modules/auth/auth.events.js";
 import authRouter from "./modules/auth/auth.route.js";
 import sessionRoutes from "./modules/session/session.route.js";
 import profileRouter from "./modules/profile/profile.route.js";
+import resumeRouter from "./modules/resume/resume.route.js";
 import jobAnalysisRouter from "./modules/jobAnalysis/jobAnalysis.route.js";
 import applicationRouter from "./modules/application/application.route.js";
 
@@ -68,6 +69,7 @@ app.get("/", (req, res) => {
 app.use("/api/v2/auth", authRouter);
 app.use("/api/v2/sessions", sessionRoutes);
 app.use("/api/v2/profile", profileRouter);
+app.use("/api/v2/resume", resumeRouter);
 app.use("/api/v2/job-analysis", jobAnalysisRouter);
 app.use("/api/v2/applications", applicationRouter);
 
