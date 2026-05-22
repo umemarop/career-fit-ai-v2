@@ -27,6 +27,7 @@ model User {
 
   refreshTokens RefreshToken[]
   profile       Profile?
+  resume        Resume?
   jobAnalyses   JobAnalysis[]
   applications  Application[]
   authTokens    AuthToken[]
@@ -90,6 +91,29 @@ model Profile {
   workEligibility WorkEligibility?
   location        String?
   targetRole      String?
+
+  desiredRoles     String[]
+  careerGoals      String?
+  preferredJobType JobType?
+  remotePreference RemotePreference?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Resume {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  originalName String
+  fileUrl      String?
+  mimeType     String
+  size         Int
+
+  rawText    String?
+  parsedJson Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -177,4 +201,19 @@ enum ApplicationStatus {
 enum AuthTokenType {
   EMAIL_VERIFICATION
   PASSWORD_RESET
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
+}
+
+enum RemotePreference {
+  REMOTE
+  HYBRID
+  ONSITE
+  FLEXIBLE
 }

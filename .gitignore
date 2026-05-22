@@ -20,6 +20,7 @@ coverage
 
 # prisma generated client
 /src/generated/prisma
+uploads/
 
 # OS files
 .DS_Store
