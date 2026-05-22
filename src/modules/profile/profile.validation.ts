@@ -9,48 +9,55 @@ const workEligibilitySchema = z.enum([
   "NOT_SURE",
 ]);
 
-export const createProfileSchema = z.object({
+const jobTypeSchema = z.enum([
+  "FULL_TIME",
+  "PART_TIME",
+  "CONTRACT",
+  "INTERNSHIP",
+  "FREELANCE",
+]);
+
+const remotePreferenceSchema = z.enum([
+  "REMOTE",
+  "HYBRID",
+  "ONSITE",
+  "FLEXIBLE",
+]);
+
+export const upsertProfileSchema = z.object({
   body: z
     .object({
-      avatarUrl: z.string().trim().url().optional(),
-
       skills: z
         .array(z.string().trim().min(1, "Skill cannot be empty"))
         .min(1, "At least one skill is required"),
+
       experienceLevel: experienceLevelSchema,
+
       workEligibility: workEligibilitySchema.optional(),
+
       location: z.string().trim().min(1, "Location cannot be empty").optional(),
+
       targetRole: z
         .string()
         .trim()
         .min(1, "Target role cannot be empty")
         .optional(),
+
+      desiredRoles: z
+        .array(z.string().trim().min(1, "Desired role cannot be empty"))
+        .default([]),
+
+      careerGoals: z
+        .string()
+        .trim()
+        .min(1, "Career goals cannot be empty")
+        .optional(),
+
+      preferredJobType: jobTypeSchema.optional(),
+
+      remotePreference: remotePreferenceSchema.optional(),
     })
     .strict(),
 });
-export type CreateProfileInput = z.infer<typeof createProfileSchema>["body"];
 
-export const updateProfileSchema = z.object({
-  body: z
-    .object({
-      avatarUrl: z.string().trim().url().optional(),
-      skills: z
-        .array(z.string().trim().min(1, "Skill cannot be empty"))
-        .min(1, "At least one skill is required")
-        .optional(),
-      experienceLevel: experienceLevelSchema.optional(),
-      workEligibility: workEligibilitySchema.optional(),
-      location: z.string().trim().min(1, "Location cannot be empty").optional(),
-      targetRole: z
-        .string()
-        .trim()
-        .min(1, "Target role cannot be empty")
-        .optional(),
-    })
-    .strict()
-    .refine((data) => Object.keys(data).length > 0, {
-      message: "At least one field must be provided for update",
-    }),
-});
-
-export type UpdateProfileInput = z.infer<typeof updateProfileSchema>["body"];
+export type UpsertProfileInput = z.infer<typeof upsertProfileSchema>["body"];

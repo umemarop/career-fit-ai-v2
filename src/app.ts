@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 import express from "express";
 import morgan from "morgan";
 
@@ -32,6 +35,14 @@ app.use(
     credentials: true,
   }),
 );
+
+const avatarUploadDir = path.join(process.cwd(), "uploads", "avatars");
+
+fs.mkdirSync(avatarUploadDir, {
+  recursive: true,
+});
+
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
