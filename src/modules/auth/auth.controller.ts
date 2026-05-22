@@ -1,6 +1,13 @@
 import type { Request, Response, NextFunction } from "express";
 
-import type { RegisterInput, LoginInput } from "./auth.validation.js";
+import type {
+  RegisterInput,
+  LoginInput,
+  VerifyEmailInput,
+  ForgotPasswordInput,
+  ResetPasswordInput,
+  ChangePasswordInput,
+} from "./auth.validation.js";
 import {
   registerUser,
   loginUser,
@@ -9,6 +16,10 @@ import {
   logoutCurrentSession,
   logoutAllSessions,
   logoutOtherSessions,
+  verifyEmail,
+  forgotPassword,
+  resetPassword,
+  changePassword,
 } from "./auth.service.js";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
@@ -127,6 +138,61 @@ export const getMe = catchAsync(
     res.status(200).json({
       status: "success",
       data: { user },
+    });
+  },
+);
+
+export const verifyEmailController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { token } = req.query as VerifyEmailInput;
+
+    await verifyEmail(token);
+
+    res.status(200).json({
+      status: "success",
+      message: "Email verified successfully",
+    });
+  },
+);
+
+export const forgotPasswordController = catchAsync(
+  async (req: Request, res: Response) => {
+    await forgotPassword(req.validated?.body as ForgotPasswordInput);
+
+    res.status(200).json({
+      status: "success",
+      message:
+        "If an account with that email exists, a password reset email has been sent.",
+    });
+  },
+);
+
+export const resetPasswordController = catchAsync(
+  async (req: Request, res: Response) => {
+    await resetPassword(req.validated?.body as ResetPasswordInput);
+
+    res.clearCookie(refreshTokenCookieName, refreshTokenCookieOptions);
+
+    res.status(200).json({
+      status: "success",
+      message: "Password reset successfully",
+    });
+  },
+);
+
+export const changePasswordController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { refreshToken } = await changePassword(
+      req.user!.id,
+      req.user!.sessionId,
+      req.validated?.body as ChangePasswordInput,
+    );
+
+    res.cookie(refreshTokenCookieName, refreshToken, refreshTokenCookieOptions);
+
+    res.status(200).json({
+      status: "success",
+      message: "Password changed successfully",
     });
   },
 );

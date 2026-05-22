@@ -5,6 +5,7 @@ import {
   verificationEmailTemplate,
   type EmailTemplate,
 } from "./templates/index.js";
+
 const resend = new Resend(env.RESEND_API_KEY);
 
 type EmailUser = {
@@ -13,49 +14,52 @@ type EmailUser = {
 };
 
 type SendEmailOptions = {
+  to: string;
   subject: string;
   html: string;
   text: string;
 };
 
 export class EmailService {
-  private readonly to: string;
-  private readonly name: string;
-  private readonly url: string;
-  private readonly from: string;
+  private readonly from = env.EMAIL_FROM;
 
-  constructor(user: EmailUser, url: string) {
-    this.to = user.email;
-    this.name = user.name || user.email;
-    this.url = url;
-    this.from = env.EMAIL_FROM;
-  }
-
-  private async send({ subject, html, text }: SendEmailOptions) {
+  private async send({ to, subject, html, text }: SendEmailOptions) {
     await resend.emails.send({
       from: this.from,
-      to: this.to,
+      to,
       subject,
       html,
       text,
     });
   }
 
-  async sendVerificationEmail() {
+  async sendVerificationEmail(user: EmailUser, verificationUrl: string) {
+    const name = user.name || user.email;
+
     const template: EmailTemplate = verificationEmailTemplate({
-      name: this.name,
-      url: this.url,
+      name,
+      url: verificationUrl,
     });
 
-    await this.send(template);
+    await this.send({
+      to: user.email,
+      ...template,
+    });
   }
 
-  async sendPasswordResetEmail() {
+  async sendPasswordResetEmail(user: EmailUser, resetUrl: string) {
+    const name = user.name || user.email;
+
     const template: EmailTemplate = passwordResetEmailTemplate({
-      name: this.name,
-      url: this.url,
+      name,
+      url: resetUrl,
     });
 
-    await this.send(template);
+    await this.send({
+      to: user.email,
+      ...template,
+    });
   }
 }
+
+export const emailService = new EmailService();

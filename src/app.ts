@@ -4,6 +4,7 @@ import morgan from "morgan";
 import { AppError } from "./utils/appError.js";
 import { errorController } from "./middlewares/error.middleware.js";
 import { env } from "./config/env.js";
+import "./modules/auth/auth.events.js";
 
 import authRouter from "./modules/auth/auth.route.js";
 import sessionRoutes from "./modules/session/session.route.js";
