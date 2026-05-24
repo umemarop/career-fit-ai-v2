@@ -1,32 +1,21 @@
 import type { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
+
 import { catchAsync } from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
-import { deleteMyResume, getMyResume, upsertResume } from "./resume.service.js";
-
-const resumeUploadDir = path.join("uploads", "resumes");
+import {
+  deleteMyResume,
+  getMyResume,
+  saveUploadedResume,
+} from "./resume.service.js";
 
 export const uploadResume = catchAsync(async (req: Request, res: Response) => {
   if (!req.file) {
     throw new AppError("Resume file is required", 400);
   }
 
-  await fs.promises.mkdir(resumeUploadDir, { recursive: true });
-
-  const filename = `resume-${req.user!.id}-${Date.now()}.pdf`;
-  const filePath = path.join(resumeUploadDir, filename);
-
-  await fs.promises.writeFile(filePath, req.file.buffer);
-
-  const fileUrl = `/uploads/resumes/${filename}`;
-
-  const resume = await upsertResume({
+  const resume = await saveUploadedResume({
     userId: req.user!.id,
-    originalName: req.file.originalname,
-    fileUrl,
-    mimeType: req.file.mimetype,
-    size: req.file.size,
+    file: req.file,
   });
 
   res.status(201).json({
