@@ -53,6 +53,11 @@ export const analyzeJobForUser = async ({
       workEligibility: true,
       location: true,
       targetRole: true,
+
+      desiredRoles: true,
+      careerGoals: true,
+      preferredJobType: true,
+      remotePreference: true,
     },
   });
 

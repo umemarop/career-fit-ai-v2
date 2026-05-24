@@ -32,6 +32,7 @@ export const createApplication = async (
     }
     const existingApplication = await prisma.application.findFirst({
       where: {
+        userId,
         jobAnalysisId: jobAnalysis.id,
         deletedAt: null,
       },
