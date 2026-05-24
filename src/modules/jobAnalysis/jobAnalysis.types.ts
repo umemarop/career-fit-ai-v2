@@ -36,5 +36,10 @@ export interface BuildUserAnalysisPromptInput {
     workEligibility: string | null;
     location: string | null;
     targetRole: string | null;
+
+    desiredRoles: string[];
+    careerGoals: string | null;
+    preferredJobType: string | null;
+    remotePreference: string | null;
   };
 }

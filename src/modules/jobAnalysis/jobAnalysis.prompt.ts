@@ -77,7 +77,7 @@ Recommendation rules:
 
 Scoring guidelines:
 - Compare required job skills with the user's skills.
-- Consider experienceLevel, workEligibility, location, and targetRole.
+- Consider experienceLevel, workEligibility, location, targetRole, desiredRoles, careerGoals, preferredJobType, and remotePreference.
 - Do not overestimate the score.
 - fitScore must be an integer between 0 and 100.
 
