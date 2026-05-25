@@ -6,6 +6,7 @@ import {
   getJobAnalysisByIdController,
 } from "./jobAnalysis.controller.js";
 import { validate } from "../../middlewares/validate.middleware.js";
+import { requireEmailVerified } from "../../middlewares/requireEmailVerified.middleware.js";
 import {
   createGuestJobAnalysisSchema,
   createUserJobAnalysisSchema,
@@ -21,21 +22,17 @@ router.post(
   validate(createGuestJobAnalysisSchema),
   analyzeGuestJobController,
 );
+
+router.use(protect);
+router.use(requireEmailVerified);
+
 router
   .route("/")
-  .get(protect, validate(getMyJobAnalysesSchema), getMyJobAnalysesController)
-  .post(
-    protect,
-    validate(createUserJobAnalysisSchema),
-    analyzeJobForUserController,
-  );
+  .get(validate(getMyJobAnalysesSchema), getMyJobAnalysesController)
+  .post(validate(createUserJobAnalysisSchema), analyzeJobForUserController);
 
 router
   .route("/:id")
-  .get(
-    protect,
-    validate(getJobAnalysisByIdSchema),
-    getJobAnalysisByIdController,
-  );
+  .get(validate(getJobAnalysisByIdSchema), getJobAnalysisByIdController);
 
 export default router;

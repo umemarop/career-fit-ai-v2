@@ -4,4 +4,5 @@ export type AuthUser = {
   id: string;
   role: Role;
   sessionId: string;
+  isEmailVerified: boolean;
 };
