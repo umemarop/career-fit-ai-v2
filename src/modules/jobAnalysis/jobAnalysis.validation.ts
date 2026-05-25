@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 
 export const createGuestJobAnalysisSchema = z.object({
   body: z
@@ -40,7 +41,12 @@ export const getMyJobAnalysesSchema = z.object({
         .optional(),
       keyword: z.string().trim().min(1).optional(),
       page: z.coerce.number().int().min(1).optional(),
-      limit: z.coerce.number().int().min(1).max(50).optional(),
+      limit: z.coerce
+        .number()
+        .int()
+        .min(1)
+        .max(PAGINATION_DEFAULTS.MAX_LIMIT)
+        .optional(),
       sort: z.enum(["latest", "fitScore_desc", "fitScore_asc"]).optional(),
     })
     .strict(),

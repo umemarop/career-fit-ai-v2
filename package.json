@@ -10,6 +10,7 @@
     "dev": "cross-env NODE_ENV=development tsx watch src/server.ts",
     "build": "prisma generate && tsc",
     "start": "cross-env NODE_ENV=production node dist/server.js",
+    "cleanup": "tsx scripts/runCleanup.ts",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
     "generate": "prisma generate",

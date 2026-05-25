@@ -14,6 +14,7 @@ import type {
   JobAnalysisListItemResponse,
   JobAnalysisDetailResponse,
 } from "./jobAnalysis.types.js";
+import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 import { generateAIJson } from "../../services/ai.service.js";
 import { AppError } from "../../utils/appError.js";
 import { prisma } from "../../prisma/client.js";
@@ -104,8 +105,8 @@ export const getMyJobAnalyses = async (
   userId: string,
   query: GetMyJobAnalysesQuery,
 ): Promise<GetMyJobAnalysesResult> => {
-  const page = query.page ?? 1;
-  const limit = query.limit ?? 10;
+  const page = query.page ?? PAGINATION_DEFAULTS.PAGE;
+  const limit = query.limit ?? PAGINATION_DEFAULTS.LIMIT;
   const skip = (page - 1) * limit;
   const where: Prisma.JobAnalysisWhereInput = {
     userId,

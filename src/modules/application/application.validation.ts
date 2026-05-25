@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 
 const applicationStatusValues = [
   "SAVED",
@@ -46,7 +47,12 @@ export const getMyApplicationsSchema = z.object({
       keyword: z.string().trim().min(1).optional(),
 
       page: z.coerce.number().int().min(1).optional(),
-      limit: z.coerce.number().int().min(1).max(50).optional(),
+      limit: z.coerce
+        .number()
+        .int()
+        .min(1)
+        .max(PAGINATION_DEFAULTS.MAX_LIMIT)
+        .optional(),
 
       sort: z
         .enum([
