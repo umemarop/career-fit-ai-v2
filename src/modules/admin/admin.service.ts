@@ -1,7 +1,7 @@
 import { prisma } from "../../prisma/client.js";
 import type { Role } from "../../generated/prisma/enums.js";
 import type { Prisma } from "../../generated/prisma/client.js";
-
+import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 import { AppError } from "../../utils/appError.js";
 import type {
   GetAdminUsersQuery,
@@ -185,8 +185,8 @@ interface GetAdminUsersResult {
 export const getAdminUsers = async (
   query: GetAdminUsersQuery,
 ): Promise<GetAdminUsersResult> => {
-  const page = query.page ?? 1;
-  const limit = query.limit ?? 20;
+  const page = query.page ?? PAGINATION_DEFAULTS.PAGE;
+  const limit = query.limit ?? PAGINATION_DEFAULTS.LIMIT;
   const skip = (page - 1) * limit;
 
   const where: Prisma.UserWhereInput = {};

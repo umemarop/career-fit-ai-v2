@@ -1,6 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import path from "path";
-import sharp from "sharp";
+
 import { catchAsync } from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
 
@@ -53,20 +52,7 @@ export const updateAvatar = catchAsync(async (req: Request, res: Response) => {
     throw new AppError("Avatar image is required", 400);
   }
 
-  const filename = `avatar-${req.user!.id}-${Date.now()}.webp`;
-  const filePath = path.join("uploads", "avatars", filename);
-
-  await sharp(req.file.buffer)
-    .resize(500, 500, {
-      fit: "cover",
-      position: "center",
-    })
-    .webp({ quality: 80 })
-    .toFile(filePath);
-
-  const avatarUrl = `/uploads/avatars/${filename}`;
-
-  const profile = await updateProfileAvatar(req.user!.id, avatarUrl);
+  const profile = await updateProfileAvatar(req.user!.id, req.file);
 
   res.status(200).json({
     status: "success",

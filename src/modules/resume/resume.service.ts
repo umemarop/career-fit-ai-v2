@@ -1,14 +1,14 @@
-import fs from "fs";
-import path from "path";
-
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../../prisma/client.js";
+
+import {
+  deleteLocalFileByUrl,
+  saveResume,
+} from "../../services/storage.service.js";
 
 import { AppError } from "../../utils/appError.js";
 import { extractResumeText } from "./resume.parser.js";
 import type { ResumeProfileDraft } from "./resume.validation.js";
-
-const resumeUploadDir = path.join("uploads", "resumes");
 
 type UpsertResumeInput = {
   userId: string;
@@ -61,26 +61,30 @@ export const saveUploadedResume = async ({
   userId,
   file,
 }: SaveUploadedResumeInput) => {
-  await fs.promises.mkdir(resumeUploadDir, { recursive: true });
+  const existingResume = await prisma.resume.findUnique({
+    where: {
+      userId,
+    },
+  });
 
-  const filename = `resume-${userId}-${Date.now()}.pdf`;
-  const filePath = path.join(resumeUploadDir, filename);
-  const pdfBuffer = file.buffer;
+  const oldFileUrl = existingResume?.fileUrl;
 
-  await fs.promises.writeFile(filePath, pdfBuffer);
+  const savedResume = await saveResume(userId, file);
 
-  const rawText = await extractResumeText(pdfBuffer);
+  const rawText = await extractResumeText(file.buffer);
 
-  const fileUrl = `/uploads/resumes/${filename}`;
-
-  return upsertResume({
+  const resume = await upsertResume({
     userId,
     originalName: file.originalname,
-    fileUrl,
+    fileUrl: savedResume.url,
     mimeType: file.mimetype,
     size: file.size,
     rawText,
   });
+
+  await deleteLocalFileByUrl(oldFileUrl);
+
+  return resume;
 };
 
 export const getMyResume = async (userId: string) => {
@@ -122,11 +126,15 @@ export const deleteMyResume = async (userId: string) => {
     return null;
   }
 
+  const oldFileUrl = resume.fileUrl;
+
   await prisma.resume.delete({
     where: {
       userId,
     },
   });
+
+  await deleteLocalFileByUrl(oldFileUrl);
 
   return null;
 };

@@ -7,6 +7,7 @@ import type {
   UpdateApplicationStatusInput,
 } from "./application.validation.js";
 import { removeUndefined } from "../../utils/removeUndefined.js";
+import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 import type { Prisma } from "../../generated/prisma/client.js";
 
 export const createApplication = async (
@@ -106,8 +107,8 @@ export const getMyApplications = async (
   userId: string,
   query: GetMyApplicationsQuery,
 ): Promise<GetmyApplicationsResult> => {
-  const page = query.page ?? 1;
-  const limit = query.limit ?? 10;
+  const page = query.page ?? PAGINATION_DEFAULTS.PAGE;
+  const limit = query.limit ?? PAGINATION_DEFAULTS.LIMIT;
   const skip = (page - 1) * limit;
 
   const where: Prisma.ApplicationWhereInput = {

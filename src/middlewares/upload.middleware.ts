@@ -1,12 +1,16 @@
 import multer from "multer";
 import { AppError } from "../utils/appError.js";
+import {
+  ALLOWED_MIME_TYPES,
+  UPLOAD_ERROR_MESSAGES,
+  UPLOAD_LIMITS,
+} from "../constants/upload.constants.js";
 
 type CreateUploadOptions = {
-  allowedMimeTypes: string[];
+  allowedMimeTypes: readonly string[];
   maxFileSize: number;
   errorMessage: string;
 };
-
 const createUploadMiddleware = ({
   allowedMimeTypes,
   maxFileSize,
@@ -30,13 +34,13 @@ const createUploadMiddleware = ({
 };
 
 export const uploadAvatar = createUploadMiddleware({
-  allowedMimeTypes: ["image/jpeg", "image/png", "image/webp"],
-  maxFileSize: 5 * 1024 * 1024,
-  errorMessage: "Only jpeg, png, and webp images are allowed",
+  allowedMimeTypes: ALLOWED_MIME_TYPES.AVATAR,
+  maxFileSize: UPLOAD_LIMITS.AVATAR_MAX_FILE_SIZE,
+  errorMessage: UPLOAD_ERROR_MESSAGES.AVATAR_INVALID_FILE_TYPE,
 });
 
 export const uploadResume = createUploadMiddleware({
-  allowedMimeTypes: ["application/pdf"],
-  maxFileSize: 10 * 1024 * 1024,
-  errorMessage: "Only PDF files are allowed",
+  allowedMimeTypes: ALLOWED_MIME_TYPES.RESUME,
+  maxFileSize: UPLOAD_LIMITS.RESUME_MAX_FILE_SIZE,
+  errorMessage: UPLOAD_ERROR_MESSAGES.RESUME_INVALID_FILE_TYPE,
 });
