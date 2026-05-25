@@ -31,6 +31,11 @@ model User {
   jobAnalyses   JobAnalysis[]
   applications  Application[]
   authTokens    AuthToken[]
+
+  @@index([deletedAt])
+  @@index([role])
+  @@index([isEmailVerified])
+  @@index([createdAt])
 }
 
 model RefreshToken {
@@ -52,9 +57,8 @@ model RefreshToken {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
-  @@index([tokenHash])
-  @@index([revokedAt])
+  @@index([userId, revokedAt])
+  @@index([userId, createdAt])
   @@index([expiresAt])
 }
 
@@ -75,8 +79,6 @@ model AuthToken {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
-  @@index([type])
   @@index([tokenHash])
   @@index([expiresAt])
 }
@@ -139,6 +141,10 @@ model JobAnalysis {
 
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   application Application?
+
+  @@index([userId, deletedAt, createdAt])
+  @@index([userId, deletedAt, recommendation])
+  @@index([userId, deletedAt, fitScore])
 }
 
 model Application {
@@ -162,6 +168,10 @@ model Application {
 
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobAnalysis JobAnalysis? @relation(fields: [jobAnalysisId], references: [id], onDelete: SetNull)
+
+  @@index([userId, deletedAt, createdAt])
+  @@index([userId, deletedAt, status])
+  @@index([userId, deletedAt, appliedAt])
 }
 
 enum Role {
