@@ -30,6 +30,7 @@ export const protect = catchAsync(
         id: true,
         role: true,
         deletedAt: true,
+        isEmailVerified: true,
       },
     });
     if (!user || user.deletedAt) {
@@ -44,6 +45,7 @@ export const protect = catchAsync(
       id: user.id,
       role: user.role,
       sessionId: decoded.sessionId,
+      isEmailVerified: user.isEmailVerified,
     };
     next();
   },

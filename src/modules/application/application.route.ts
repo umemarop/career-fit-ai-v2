@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { protect } from "../../middlewares/auth.middleware.js";
 import { validate } from "../../middlewares/validate.middleware.js";
+import { requireEmailVerified } from "../../middlewares/requireEmailVerified.middleware.js";
 import {
   createApplicationController,
   getMyApplicationsController,
@@ -22,6 +23,7 @@ import {
 const router = Router();
 
 router.use(protect);
+router.use(requireEmailVerified);
 
 router
   .route("/")

@@ -197,6 +197,8 @@ export const verifyEmail = async (token: string) => {
     AuthTokenType.EMAIL_VERIFICATION,
   );
 
+  const now = new Date();
+
   await prisma.$transaction([
     prisma.user.update({
       where: {
@@ -204,6 +206,7 @@ export const verifyEmail = async (token: string) => {
       },
       data: {
         isEmailVerified: true,
+        emailVerifiedAt: now,
       },
     }),
 
@@ -212,7 +215,7 @@ export const verifyEmail = async (token: string) => {
         id: authToken.id,
       },
       data: {
-        usedAt: new Date(),
+        usedAt: now,
       },
     }),
   ]);
