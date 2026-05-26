@@ -19,6 +19,8 @@ const envSchema = z.object({
 
   CLIENT_URL: z.string().min(1).default("http://localhost:5173"),
 
+  API_URL: z.string().min(1).default("http://localhost:3000/api/v2"),
+
   EMAIL_VERIFICATION_EXPIRES_MINUTES: z.coerce.number().positive(),
 
   PASSWORD_RESET_EXPIRES_MINUTES: z.coerce.number().positive(),

@@ -23,7 +23,7 @@ import { upsertProfileSchema } from "./profile.validation.js";
 const router = Router();
 
 router.use(protect);
-// router.use(requireEmailVerified);
+router.use(requireEmailVerified);
 
 router.get("/me", getProfile);
 
