@@ -16,11 +16,12 @@
     "generate": "prisma generate",
     "studio": "prisma studio --port 51212 --browser none",
     "seed": "prisma db seed",
-    "test": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
-    "test:watch": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --runInBand",
-    "test:coverage": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --runInBand",
-    "test:detect": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --detectOpenHandles",
-    "test:migrate": "dotenv -e .env.test -- npx prisma migrate deploy"
+    "test": "dotenv -e .env.test --override -- node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "dotenv -e .env.test --override -- node --experimental-vm-modules node_modules/jest/bin/jest.js --watch --runInBand",
+    "test:coverage": "dotenv -e .env.test --override -- node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --runInBand",
+    "test:detect": "dotenv -e .env.test --override -- node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --detectOpenHandles",
+    "test:migrate": "dotenv -e .env.test --override -- npx prisma migrate deploy",
+    "test:reset": "dotenv -e .env.test --override -- npx prisma migrate reset --force --skip-seed"
   },
   "author": "",
   "license": "ISC",
