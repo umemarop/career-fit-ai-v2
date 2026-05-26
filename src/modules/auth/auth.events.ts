@@ -1,8 +1,12 @@
 import { eventBus } from "../../events/eventBus.js";
 import { emailService } from "../email/email.service.js";
+import { env } from "../../config/env.js";
 
 eventBus.on("auth.emailVerificationRequested", async (payload) => {
-  console.log("email verification event received", payload.email);
+  if (env.NODE_ENV === "test") {
+    return;
+  }
+
   try {
     await emailService.sendVerificationEmail(
       {
@@ -18,6 +22,9 @@ eventBus.on("auth.emailVerificationRequested", async (payload) => {
 });
 
 eventBus.on("auth.passwordResetRequested", async (payload) => {
+  if (env.NODE_ENV === "test") {
+    return;
+  }
   try {
     await emailService.sendPasswordResetEmail(
       {

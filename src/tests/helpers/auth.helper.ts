@@ -1,47 +1,84 @@
 import request from "supertest";
+import { app } from "../../app.js";
+import { prisma } from "../../prisma/client.js";
 
-export const defaultPassword = "Password123";
-
-export const createUniqueTestEmail = () => {
-  return `test-${crypto.randomUUID()}@example.com`;
+type CreateTestUserInput = {
+  email?: string;
+  password?: string;
 };
 
-const getApp = async () => {
-  const { app } = await import("../../app.js");
-  return app;
+export const defaultTestPassword = "Password123!";
+
+const createUniqueEmail = () => {
+  return `test-${Date.now()}-${Math.random().toString(36).slice(2)}@example.com`;
 };
 
-export const registerTestUser = async (email = createUniqueTestEmail()) => {
-  const app = await getApp();
+export const createTestUser = async (input: CreateTestUserInput = {}) => {
+  const email = input.email ?? createUniqueEmail();
+  const password = input.password ?? defaultTestPassword;
 
-  return request(app).post("/api/v1/auth/register").send({
+  const res = await request(app).post("/api/v2/auth/register").send({
     email,
-    password: defaultPassword,
-    confirmPassword: defaultPassword,
+    password,
+    confirmPassword: password,
+  });
+
+  return {
+    res,
+    email,
+    password,
+  };
+};
+
+export const verifyTestUserEmail = async (email: string) => {
+  return prisma.user.update({
+    where: { email },
+    data: {
+      isEmailVerified: true,
+      emailVerifiedAt: new Date(),
+    },
   });
 };
 
-export const loginTestUser = async (
-  email: string,
-  password = defaultPassword,
-) => {
-  const app = await getApp();
-
-  return request(app).post("/api/v1/auth/login").send({
+export const loginTestUser = async (email: string, password: string) => {
+  const res = await request(app).post("/api/v2/auth/login").send({
     email,
     password,
   });
-};
 
-export const createAndLoginTestUser = async (
-  email = createUniqueTestEmail(),
-) => {
-  await registerTestUser(email);
-
-  const loginRes = await loginTestUser(email);
+  const accessToken = res.body?.data?.accessToken ?? res.body?.accessToken;
 
   return {
-    token: loginRes.body.data.token,
-    user: loginRes.body.data.user,
+    res,
+    accessToken,
+    authHeader: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+
+export const createUserAndLogin = async (input: CreateTestUserInput = {}) => {
+  const created = await createTestUser(input);
+
+  const loggedIn = await loginTestUser(created.email, created.password);
+
+  return {
+    ...created,
+    ...loggedIn,
+  };
+};
+
+export const createVerifiedUserAndLogin = async (
+  input: CreateTestUserInput = {},
+) => {
+  const created = await createTestUser(input);
+
+  await verifyTestUserEmail(created.email);
+
+  const loggedIn = await loginTestUser(created.email, created.password);
+
+  return {
+    ...created,
+    ...loggedIn,
   };
 };
