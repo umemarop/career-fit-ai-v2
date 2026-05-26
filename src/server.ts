@@ -4,6 +4,7 @@ import http from "http";
 import { app } from "./app.js";
 import { env } from "./config/env.js";
 import { prisma } from "./prisma/client.js";
+import { logger } from "./utils/logger.js";
 
 let server: http.Server | undefined;
 let isShutdown = false;
@@ -12,7 +13,7 @@ const shutdown = async (exitCode = 0) => {
   if (isShutdown) return;
   isShutdown = true;
 
-  console.log("Shutting down...");
+  logger.info("Shutting down");
 
   try {
     const currentServer = server;
@@ -25,13 +26,15 @@ const shutdown = async (exitCode = 0) => {
         });
       });
 
-      console.log("HTTP server closed.");
+      logger.info("HTTP server closed");
     }
 
     await prisma.$disconnect();
-    console.log("Prisma disconnected.");
+    logger.info("Prisma disconnected");
   } catch (err) {
-    console.error("Error during shutdown:", err);
+    logger.error("Error during shutdown", {
+      error: err instanceof Error ? err.message : err,
+    });
     exitCode = 1;
   } finally {
     process.exit(exitCode);
@@ -39,8 +42,11 @@ const shutdown = async (exitCode = 0) => {
 };
 
 process.on("uncaughtException", (err: Error) => {
-  console.error("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-  console.error(err.name, err.message);
+  logger.error("Uncaught exception", {
+    name: err.name,
+    message: err.message,
+    stack: err.stack,
+  });
 
   if (server) {
     void shutdown(1);
@@ -50,22 +56,26 @@ process.on("uncaughtException", (err: Error) => {
 });
 
 process.on("unhandledRejection", (reason) => {
-  console.error("UNHANDLED REJECTION! 💥 Shutting down...");
-  console.error(reason);
+  logger.error("Unhandled rejection", {
+    reason,
+  });
 
   void shutdown(1);
 });
 
 process.on("SIGTERM", () => {
-  console.log("SIGTERM received. Shutting down gracefully...");
+  logger.info("SIGTERM received. Shutting down gracefully");
   void shutdown(0);
 });
 
 process.on("SIGINT", () => {
-  console.log("SIGINT received. Shutting down gracefully...");
+  logger.info("SIGINT received. Shutting down gracefully");
   void shutdown(0);
 });
 
 server = app.listen(env.PORT, () => {
-  console.log(`Server is running on port ${env.PORT}`);
+  logger.info("Server started", {
+    port: env.PORT,
+    nodeEnv: env.NODE_ENV,
+  });
 });

@@ -30,7 +30,7 @@ app.use(
     contentSecurityPolicy: false,
   }),
 );
-
+app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 app.use(
   cors({
     origin: env.CLIENT_URL,
@@ -50,7 +50,12 @@ app.use(compression());
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 app.use(hpp());
-app.use(morgan("dev"));
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+  });
+});
 
 app.get("/", (req, res) => {
   res.status(200).json({

@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { env } from "../config/env.js";
+import { logger } from "../utils/logger.js";
 
 type ErrorWithStatus = Error & {
   statusCode?: number;
@@ -41,6 +42,26 @@ export const errorController = (
 ) => {
   err.statusCode ||= 500;
   err.status ||= "error";
+
+  const shouldLogAsError = err.statusCode >= 500 || !err.isOperational;
+
+  const logMeta = {
+    message: err.message,
+    statusCode: err.statusCode,
+    status: err.status,
+    isOperational: err.isOperational,
+    method: req.method,
+    path: req.originalUrl,
+    ip: req.ip,
+    stack:
+      env.NODE_ENV !== "production" && shouldLogAsError ? err.stack : undefined,
+  };
+
+  if (shouldLogAsError) {
+    logger.error("Request failed", logMeta);
+  } else {
+    logger.warn("Request failed", logMeta);
+  }
 
   if (env.NODE_ENV === "development") {
     sendErrorDev(err, res);
