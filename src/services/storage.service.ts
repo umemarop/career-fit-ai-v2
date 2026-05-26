@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
+import { logger } from "../utils/logger.js";
 
 type StoredFile = {
   url: string;
@@ -80,6 +81,9 @@ export const deleteLocalFileByUrl = async (
   const prefix = `/${UPLOADS_DIR}/`;
 
   if (!fileUrl.startsWith(prefix)) {
+    logger.warn("Skipped deleting non-local file", {
+      fileUrl,
+    });
     return;
   }
 
@@ -89,6 +93,11 @@ export const deleteLocalFileByUrl = async (
   try {
     await fs.unlink(filePath);
   } catch (error) {
-    console.error(`Failed to delete local file: ${filePath}`, error);
+    logger.warn("Failed to delete local file", {
+      fileUrl,
+      key,
+      filePath,
+      error: error instanceof Error ? error.message : error,
+    });
   }
 };

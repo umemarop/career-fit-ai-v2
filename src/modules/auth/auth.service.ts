@@ -12,6 +12,7 @@ import {
   createPasswordResetToken,
 } from "../auth-token/authToken.service.js";
 import type { RequestMetadata } from "../../utils/requestMetadata.js";
+import { logger } from "../../utils/logger.js";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -73,7 +74,10 @@ export const registerUser = async (input: RegisterInput) => {
 
   const verificationUrl = `${env.CLIENT_URL}/verify-email?token=${verificationToken}`;
 
-  console.log("emitting verification email event", user.email);
+  logger.info("Email verification event emitted", {
+    userId: user.id,
+    email: user.email,
+  });
 
   eventBus.emit("auth.emailVerificationRequested", {
     userId: user.id,
@@ -100,12 +104,19 @@ export const loginUser = async (
   });
 
   if (!user) {
+    logger.warn("Login failed: user not found or deleted", {
+      email: normalizedEmail,
+    });
     throw new AppError("Invalid email or password", 401);
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
+    logger.warn("Login failed: invalid password", {
+      userId: user.id,
+      email: user.email,
+    });
     throw new AppError("Invalid email or password", 401);
   }
 
@@ -236,12 +247,21 @@ export const forgotPassword = async (
   });
 
   if (!user) {
+    logger.warn("Password reset requested for non-existing email", {
+      email: normalizedEmail,
+    });
+
     return;
   }
 
   const resetToken = await createPasswordResetToken(user.id);
 
   const resetUrl = `${env.CLIENT_URL}/reset-password?token=${resetToken}`;
+
+  logger.info("Password reset event emitted", {
+    userId: user.id,
+    email: user.email,
+  });
 
   eventBus.emit("auth.passwordResetRequested", {
     userId: user.id,
@@ -316,6 +336,10 @@ export const changePassword = async (
   );
 
   if (!isPasswordCorrect) {
+    logger.warn("Change password failed: incorrect current password", {
+      userId: user.id,
+    });
+
     throw new AppError("Current password is incorrect", 400);
   }
 
