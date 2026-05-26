@@ -4,6 +4,9 @@ import path from "path";
 import express from "express";
 import morgan from "morgan";
 
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./docs/swagger.js";
+
 import { AppError } from "./utils/appError.js";
 import { errorController } from "./middlewares/error.middleware.js";
 import { env } from "./config/env.js";
@@ -71,6 +74,7 @@ app.get("/", (req, res) => {
     },
   });
 });
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/v2/auth", authRouter);
 app.use("/api/v2/sessions", sessionRoutes);
