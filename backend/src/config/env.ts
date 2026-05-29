@@ -5,7 +5,7 @@ const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
 
-  PORT: z.coerce.number().default(3000),
+  PORT: z.coerce.number().default(4000),
 
   DATABASE_URL: z.string().min(1),
 
@@ -17,9 +17,9 @@ const envSchema = z.object({
 
   GEMINI_API_KEY: z.string().min(1),
 
-  CLIENT_URL: z.string().min(1).default("http://localhost:5173"),
+  CLIENT_URL: z.string().min(1).default("http://localhost:3000"),
 
-  API_URL: z.string().min(1).default("http://localhost:3000/api/v2"),
+  API_URL: z.string().min(1).default("http://localhost:4000/api/v2"),
 
   EMAIL_VERIFICATION_EXPIRES_MINUTES: z.coerce.number().positive(),
 
