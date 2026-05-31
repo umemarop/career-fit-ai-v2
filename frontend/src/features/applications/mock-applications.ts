@@ -1,0 +1,75 @@
+import type { Application } from "@/types/application.types";
+
+export const mockApplications: Application[] = [
+  {
+    id: "app-1",
+    jobAnalysisId: "analysis-1",
+    jobTitle: "Junior Backend Developer",
+    companyName: "TechNova",
+    location: "Brisbane, Australia",
+    jobUrl: "https://example.com/jobs/backend-developer",
+    status: "APPLIED",
+    notes:
+      "Strong match with Node.js, PostgreSQL, Prisma, and REST API experience. Need to prepare examples about auth and testing.",
+    nextStep: "Follow up with recruiter next Monday",
+    appliedAt: "2026-05-24T10:30:00.000Z",
+    createdAt: "2026-05-20T08:00:00.000Z",
+    updatedAt: "2026-05-24T10:30:00.000Z",
+  },
+  {
+    id: "app-2",
+    jobTitle: "Full Stack Developer Intern",
+    companyName: "LaunchPad Labs",
+    location: "Remote",
+    jobUrl: "https://example.com/jobs/full-stack-intern",
+    status: "SAVED",
+    notes:
+      "Good opportunity for startup experience. Need to review frontend requirements before applying.",
+    nextStep: "Tailor resume for full stack role",
+    appliedAt: null,
+    createdAt: "2026-05-22T09:15:00.000Z",
+    updatedAt: "2026-05-22T09:15:00.000Z",
+  },
+  {
+    id: "app-3",
+    jobTitle: "Node.js Developer",
+    companyName: "CloudBridge",
+    location: "Sydney, Australia",
+    jobUrl: "https://example.com/jobs/nodejs-developer",
+    status: "INTERVIEWING",
+    notes:
+      "First screening completed. They asked about refresh token rotation, Docker, and API design.",
+    nextStep: "Prepare for technical interview",
+    appliedAt: "2026-05-18T11:00:00.000Z",
+    createdAt: "2026-05-17T07:45:00.000Z",
+    updatedAt: "2026-05-27T14:20:00.000Z",
+  },
+  {
+    id: "app-4",
+    jobTitle: "Junior Software Engineer",
+    companyName: "BrightApps",
+    location: "Melbourne, Australia",
+    jobUrl: null,
+    status: "REJECTED",
+    notes:
+      "Rejected after initial application. Could improve cover letter for similar roles.",
+    nextStep: "Review job description and update resume keywords",
+    appliedAt: "2026-05-10T06:30:00.000Z",
+    createdAt: "2026-05-09T05:30:00.000Z",
+    updatedAt: "2026-05-19T12:00:00.000Z",
+  },
+  {
+    id: "app-5",
+    jobTitle: "Backend API Developer",
+    companyName: null,
+    location: null,
+    jobUrl: "https://example.com/jobs/api-developer",
+    status: "OFFER",
+    notes:
+      "Small startup role. Need to compare salary, visa support, and growth opportunity.",
+    nextStep: "Review offer details",
+    appliedAt: "2026-05-01T04:00:00.000Z",
+    createdAt: "2026-04-30T03:20:00.000Z",
+    updatedAt: "2026-05-28T09:00:00.000Z",
+  },
+];
