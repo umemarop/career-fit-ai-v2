@@ -1,13 +1,13 @@
 export const jobAnalysisPaths = {
-  "/api/v2/job-analysis/guest": {
+  "/api/v2/job-analysis/public": {
     post: {
       tags: ["Job Analysis"],
-      summary: "Analyze a job description as guest",
-      description: "Analyze a job description without authentication.",
+      summary: "Analyze a job description publicly",
+      description:
+        "Public job analysis endpoint for guests. This endpoint does not require authentication, does not use the user's profile or resume, does not return a fit score or recommendation, and does not save analysis history.",
 
       requestBody: {
         required: true,
-
         content: {
           "application/json": {
             schema: {
@@ -19,19 +19,16 @@ export const jobAnalysisPaths = {
 
       responses: {
         200: {
-          description: "Guest job analysis completed successfully",
-
+          description: "Public job analysis completed successfully",
           content: {
             "application/json": {
               schema: {
                 type: "object",
-
                 properties: {
                   status: {
                     type: "string",
                     example: "success",
                   },
-
                   data: {
                     $ref: "#/components/schemas/GuestJobAnalysisResponse",
                   },
@@ -43,7 +40,6 @@ export const jobAnalysisPaths = {
 
         400: {
           description: "Invalid job description",
-
           content: {
             "application/json": {
               schema: {
@@ -61,7 +57,7 @@ export const jobAnalysisPaths = {
       tags: ["Job Analysis"],
       summary: "Get my job analyses",
       description:
-        "Retrieve paginated job analyses for the authenticated user.",
+        "Retrieve paginated job analyses for the authenticated and email-verified user. This endpoint requires email verification because analysis history belongs to a verified user account.",
 
       security: [
         {
@@ -160,8 +156,7 @@ export const jobAnalysisPaths = {
       tags: ["Job Analysis"],
       summary: "Analyze a job description for authenticated user",
       description:
-        "Analyze a job description using the authenticated user's profile and resume.",
-
+        "Analyze a job description using the authenticated and email-verified user's profile. This endpoint returns a personalized fit score, recommendation, and analysis result, and saves the analysis history.",
       security: [
         {
           bearerAuth: [],

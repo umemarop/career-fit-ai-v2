@@ -18,7 +18,7 @@ import { protect } from "../../middlewares/auth.middleware.js";
 const router = Router();
 
 router.post(
-  "/guest",
+  "/public",
   validate(createGuestJobAnalysisSchema),
   analyzeGuestJobController,
 );
