@@ -1,6 +1,9 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { BriefcaseBusiness, FileText, Sparkles, Kanban } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { PublicAnalysisSection } from "@/features/public-analysis/components/PublicAnalysisSection";
+
 const features = [
   {
     icon: BriefcaseBusiness,
@@ -51,7 +54,7 @@ export default function HomePage() {
         </nav>
       </header>
 
-      <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center">
+      <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-20 text-center">
         <div className="mb-6 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm text-indigo-700">
           AI-powered job application assistant
         </div>
@@ -74,12 +77,14 @@ export default function HomePage() {
             asChild
             size="lg"
             variant="outline"
-            className="h-12 px-8 border-slate-300 text-slate-700 hover:bg-slate-100"
+            className="h-12 border-slate-300 px-8 text-slate-700 hover:bg-slate-100"
           >
             <Link href="/login">I already have an account</Link>
           </Button>
         </div>
       </section>
+
+      <PublicAnalysisSection />
 
       <section className="mx-auto grid max-w-7xl gap-5 px-6 pb-24 md:grid-cols-2 lg:grid-cols-4">
         {features.map((feature) => {
