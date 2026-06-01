@@ -6,8 +6,8 @@ import { analyzePublicJob } from "@/services/public-analysis.service";
 import type { GuestJobAnalysisResult } from "@/types/job-analysis.types";
 import { normalizeApiError } from "@/utils/api-error";
 
-import { PublicAnalysisForm } from "./PublicAnalysisForm";
-import { PublicAnalysisResult } from "./PublicAnalysisResult";
+import { PublicAnalysisForm } from "./components/PublicAnalysisForm";
+import { PublicAnalysisResult } from "./components/PublicAnalysisResult";
 
 export function PublicAnalysisSection() {
   const [jobDescription, setJobDescription] = useState("");
