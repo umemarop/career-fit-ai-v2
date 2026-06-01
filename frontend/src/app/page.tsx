@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BriefcaseBusiness, FileText, Sparkles, Kanban } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { PublicAnalysisSection } from "@/features/public-analysis/components/PublicAnalysisSection";
+import { PublicAnalysisSection } from "@/features/public-analysis/PublicAnalysisSection";
 
 const features = [
   {
