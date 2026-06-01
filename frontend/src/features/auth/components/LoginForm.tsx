@@ -1,14 +1,18 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { authService } from "@/services/auth.service";
+import { useAuth } from "@/features/auth/useAuth";
 import { normalizeApiError } from "@/utils/api-error";
 import type { LoginInput } from "@/types/auth.types";
 
 export function LoginForm() {
+  const router = useRouter();
+  const { login } = useAuth();
+
   const [form, setForm] = useState<LoginInput>({
     email: "",
     password: "",
@@ -43,12 +47,12 @@ export function LoginForm() {
     try {
       setIsSubmitting(true);
 
-      const result = await authService.login({
+      await login({
         email: form.email.trim(),
         password: form.password,
       });
 
-      console.log("Login success:", result);
+      router.replace("/dashboard");
     } catch (error) {
       const normalizedError = normalizeApiError(error);
       setErrorMessage(normalizedError.message);

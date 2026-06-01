@@ -27,10 +27,24 @@ export type RegisterInput = {
   confirmPassword: string;
 };
 
-export type AuthResponse = {
+export type LoginResponse = {
   status: "success";
   data: {
     user: AuthUser;
+    accessToken: string;
+  };
+};
+
+export type RegisterResponse = {
+  status: "success";
+  data: {
+    user: AuthUser;
+  };
+};
+
+export type RefreshResponse = {
+  status: "success";
+  data: {
     accessToken: string;
   };
 };

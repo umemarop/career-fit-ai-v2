@@ -193,6 +193,10 @@ export const getMeUser = async (userId: string) => {
       id: true,
       email: true,
       role: true,
+
+      isEmailVerified: true,
+      emailVerifiedAt: true,
+
       createdAt: true,
       updatedAt: true,
     },
