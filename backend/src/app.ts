@@ -31,6 +31,9 @@ export const app = express();
 app.use(
   helmet({
     contentSecurityPolicy: false,
+    crossOriginResourcePolicy: {
+      policy: "cross-origin",
+    },
   }),
 );
 app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
