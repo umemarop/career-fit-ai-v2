@@ -78,8 +78,8 @@ export function PublicAnalysisResult({
 
         <p className="mt-3 text-sm leading-6 text-slate-600">
           Paste a job description to preview how CareerFit AI extracts role
-          details, required skills, responsibilities, preparation tips, and
-          possible warnings.
+          details, required skills, responsibilities, preparation tips, and key
+          considerations.
         </p>
 
         <div className="mt-6 space-y-3">
@@ -105,7 +105,7 @@ export function PublicAnalysisResult({
 
           <div className="flex items-center gap-2 text-sm text-slate-700">
             <AlertTriangle className="h-4 w-4 text-amber-500" />
-            Potential Warnings
+            Things to Consider
           </div>
         </div>
 
@@ -197,7 +197,7 @@ export function PublicAnalysisResult({
           <section className="rounded-xl border border-amber-200 bg-amber-50 p-4">
             <h4 className="flex items-center gap-2 text-sm font-semibold text-amber-900">
               <AlertTriangle className="h-4 w-4" />
-              Warnings
+              Things to Consider
             </h4>
 
             <ul className="mt-3 space-y-2">
