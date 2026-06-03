@@ -2,9 +2,13 @@ import { Plus } from "lucide-react";
 
 type ApplicationsHeaderProps = {
   totalCount: number;
+  onAddClick: () => void;
 };
 
-export function ApplicationsHeader({ totalCount }: ApplicationsHeaderProps) {
+export function ApplicationsHeader({
+  totalCount,
+  onAddClick,
+}: ApplicationsHeaderProps) {
   return (
     <section className="flex flex-col gap-4 rounded-2xl border bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
       <div>
@@ -21,11 +25,12 @@ export function ApplicationsHeader({ totalCount }: ApplicationsHeaderProps) {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="rounded-xl border bg-slate-50 px-4 py-2 text-sm text-slate-600">
           <span className="font-semibold text-slate-950">{totalCount}</span>{" "}
-          applications
+          {totalCount === 1 ? "application" : "applications"}
         </div>
 
         <button
           type="button"
+          onClick={onAddClick}
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700"
         >
           <Plus className="h-4 w-4" />
