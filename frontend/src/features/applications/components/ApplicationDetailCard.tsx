@@ -1,10 +1,18 @@
-import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
+import {
+  CalendarDays,
+  ExternalLink,
+  MapPin,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 
 import type { Application } from "@/types/application.types";
 import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
 
 type ApplicationDetailCardProps = {
   application: Application;
+  onEditClick: (applicationId: string) => void;
+  onDeleteClick: (applicationId: string) => void;
 };
 
 function formatDate(date?: string | null) {
@@ -19,6 +27,8 @@ function formatDate(date?: string | null) {
 
 export function ApplicationDetailCard({
   application,
+  onEditClick,
+  onDeleteClick,
 }: ApplicationDetailCardProps) {
   return (
     <aside className="rounded-2xl border bg-white p-5 shadow-sm">
@@ -33,6 +43,26 @@ export function ApplicationDetailCard({
         </div>
 
         <ApplicationStatusBadge status={application.status} />
+      </div>
+
+      <div className="mt-5 flex gap-2">
+        <button
+          type="button"
+          onClick={() => onEditClick(application.id)}
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+        >
+          <Pencil className="h-4 w-4" />
+          Edit
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onDeleteClick(application.id)}
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-rose-100 bg-white px-3 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50"
+        >
+          <Trash2 className="h-4 w-4" />
+          Delete
+        </button>
       </div>
 
       <div className="mt-5 space-y-3 text-sm">
@@ -90,7 +120,7 @@ export function ApplicationDetailCard({
         <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
           Next Step
         </p>
-        <p className="mt-2 text-sm text-slate-700">
+        <p className="mt-2 whitespace-pre-line text-sm text-slate-700">
           {application.nextStep ?? "No next step added yet."}
         </p>
       </div>
@@ -99,10 +129,21 @@ export function ApplicationDetailCard({
         <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
           Notes
         </p>
-        <p className="mt-2 text-sm leading-6 text-slate-700">
+        <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-700">
           {application.notes ?? "No notes added yet."}
         </p>
       </div>
+
+      {application.jobAnalysisId ? (
+        <div className="mt-4 rounded-xl border border-indigo-100 bg-indigo-50 p-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-indigo-500">
+            Related Analysis
+          </p>
+          <p className="mt-2 text-sm text-indigo-700">
+            This application was created from a saved job analysis.
+          </p>
+        </div>
+      ) : null}
 
       <div className="mt-5 grid gap-3 border-t pt-5 text-xs text-slate-500">
         <div className="flex items-center justify-between">

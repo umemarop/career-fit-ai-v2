@@ -5,12 +5,17 @@ type ApplicationStatusBadgeProps = {
 };
 
 const statusStyles: Record<ApplicationStatus, string> = {
-  SAVED: "border-slate-200 bg-slate-50 text-slate-700",
+  SAVED: "border-sky-200 bg-sky-50 text-sky-700",
+
   APPLIED: "border-indigo-200 bg-indigo-50 text-indigo-700",
+
   INTERVIEWING: "border-amber-200 bg-amber-50 text-amber-700",
+
   OFFER: "border-emerald-200 bg-emerald-50 text-emerald-700",
+
   REJECTED: "border-rose-200 bg-rose-50 text-rose-700",
-  WITHDRAWN: "border-zinc-200 bg-zinc-50 text-zinc-700",
+
+  WITHDRAWN: "border-slate-200 bg-slate-100 text-slate-600",
 };
 
 const statusLabels: Record<ApplicationStatus, string> = {

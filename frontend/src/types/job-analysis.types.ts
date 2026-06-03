@@ -65,6 +65,8 @@ export type PaginationMeta = {
   limit: number;
   total: number;
   totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
 };
 
 export type JobAnalysisListResponse = {

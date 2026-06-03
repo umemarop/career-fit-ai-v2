@@ -21,3 +21,11 @@ export function formatDate(dateString: string): string {
     year: "numeric",
   }).format(new Date(dateString));
 }
+
+export function formatDateInputValue(dateString?: string | null): string {
+  if (!dateString) {
+    return "";
+  }
+
+  return new Date(dateString).toISOString().slice(0, 10);
+}
