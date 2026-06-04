@@ -42,6 +42,10 @@ type AnalysisResult = ApplicationSourceAnalysis & {
 
 const HISTORY_LIMIT = 10;
 
+const isEmailVerificationError = (message: string) => {
+  return message.toLowerCase().includes("email verification required");
+};
+
 export function useAnalysisPage() {
   const router = useRouter();
   const resultSectionRef = useRef<HTMLDivElement | null>(null);
@@ -111,6 +115,11 @@ export function useAnalysisPage() {
       setHistoryPage(result.meta.page);
     } catch (error) {
       const normalizedError = normalizeApiError(error);
+
+      if (isEmailVerificationError(normalizedError.message)) {
+        return;
+      }
+
       toast.error(normalizedError.message);
     } finally {
       setIsHistoryLoading(false);
@@ -135,6 +144,11 @@ export function useAnalysisPage() {
       scrollToResultSection();
     } catch (error) {
       const normalizedError = normalizeApiError(error);
+
+      if (isEmailVerificationError(normalizedError.message)) {
+        return;
+      }
+
       toast.error(normalizedError.message);
     } finally {
       setIsAnalyzing(false);
@@ -210,6 +224,11 @@ export function useAnalysisPage() {
       scrollToResultSection();
     } catch (error) {
       const normalizedError = normalizeApiError(error);
+
+      if (isEmailVerificationError(normalizedError.message)) {
+        return;
+      }
+
       toast.error(normalizedError.message);
     } finally {
       setIsSelectingAnalysis(false);

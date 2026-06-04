@@ -1,5 +1,6 @@
 "use client";
 
+import { EmailVerificationBanner } from "./components/EmailVerificationBanner";
 import { DashboardQuickActions } from "@/features/dashboard/components/DashboardQuickActions";
 import { DashboardStats } from "@/features/dashboard/components/DashboardStats";
 import { DashboardWelcome } from "@/features/dashboard/components/DashboardWelcome";
@@ -12,6 +13,9 @@ export function DashboardPageClient() {
     user,
     stats,
     quickActions,
+    verificationMessage,
+    isResendingVerification,
+    handleResendVerification,
     recentAnalyses,
     recentApplications,
     isLoading,
@@ -34,6 +38,15 @@ export function DashboardPageClient() {
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {errorMessage}
         </div>
+      ) : null}
+
+      {user && !user.isEmailVerified ? (
+        <EmailVerificationBanner
+          email={user.email}
+          isSending={isResendingVerification}
+          message={verificationMessage}
+          onResend={handleResendVerification}
+        />
       ) : null}
 
       <DashboardStats stats={stats} />

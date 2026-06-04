@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { BarChart3, Briefcase, FileText, User } from "lucide-react";
 
 import { useAuth } from "@/features/auth/useAuth";
+import { dashboardService } from "@/services/dashboard.service";
 import { applicationService } from "@/services/application.service";
 import { jobAnalysisService } from "@/services/job-analysis.service";
 import type { ApplicationListItem } from "@/types/application.types";
@@ -12,6 +13,12 @@ const RECENT_LIMIT = 5;
 
 export function useDashboardPage() {
   const { user } = useAuth();
+
+  const [verificationMessage, setVerificationMessage] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [isResendingVerification, setIsResendingVerification] = useState(false);
 
   const [recentAnalyses, setRecentAnalyses] = useState<JobAnalysisListItem[]>(
     [],
@@ -26,6 +33,26 @@ export function useDashboardPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const handleResendVerification = async () => {
+    try {
+      setIsResendingVerification(true);
+      setVerificationMessage(null);
+
+      const response = await dashboardService.resendVerificationEmail();
+
+      setVerificationMessage({
+        type: "success",
+        message: response.message,
+      });
+    } catch (error) {
+      setVerificationMessage({
+        type: "error",
+        message: normalizeApiError(error).message,
+      });
+    } finally {
+      setIsResendingVerification(false);
+    }
+  };
 
   const fetchDashboard = useCallback(async () => {
     try {
@@ -136,6 +163,9 @@ export function useDashboardPage() {
 
   return {
     user,
+    verificationMessage,
+    isResendingVerification,
+    handleResendVerification,
     stats,
     quickActions,
     recentAnalyses,

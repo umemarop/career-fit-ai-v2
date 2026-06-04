@@ -8,10 +8,13 @@ import { AnalysisInsights } from "@/features/analysis/components/AnalysisInsight
 import { AnalysisResultCard } from "@/features/analysis/components/AnalysisResultCard";
 import { FitScoreCard } from "@/features/analysis/components/FitScoreCard";
 import { GoToApplicationModal } from "@/features/analysis/components/GoToApplicationModal";
-import { RecommendationCard } from "@/features/analysis/components/RecommendationCard";
 import { useAnalysisPage } from "@/features/analysis/hooks/useAnalysisPage";
+import { RecommendationCard } from "@/features/analysis/components/RecommendationCard";
+import { useAuth } from "@/features/auth/useAuth";
 
 export function AnalysisPageClient() {
+  const { user } = useAuth();
+
   const {
     resultSectionRef,
 
@@ -53,6 +56,12 @@ export function AnalysisPageClient() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <AnalysisHeader />
+
+      {!user?.isEmailVerified ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Email verification required
+        </div>
+      ) : null}
 
       <AnalysisForm
         value={jobDescription}
