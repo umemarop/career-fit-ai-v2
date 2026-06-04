@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles } from "lucide-react";
 
@@ -45,7 +45,7 @@ export function AnalysisForm({
       </div>
 
       <div className="mt-4 flex justify-end">
-        <Button
+        <VerifiedActionButton
           type="button"
           className="gap-2"
           onClick={onSubmit}
@@ -53,7 +53,7 @@ export function AnalysisForm({
         >
           <Sparkles className="h-4 w-4" />
           {isLoading ? "Analyzing..." : "Analyze job"}
-        </Button>
+        </VerifiedActionButton>
       </div>
     </section>
   );

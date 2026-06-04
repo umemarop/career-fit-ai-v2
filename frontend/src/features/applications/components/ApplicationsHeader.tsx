@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
 
 type ApplicationsHeaderProps = {
   totalCount: number;
@@ -28,14 +29,14 @@ export function ApplicationsHeader({
           {totalCount === 1 ? "application" : "applications"}
         </div>
 
-        <button
+        <VerifiedActionButton
           type="button"
           onClick={onAddClick}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700"
+          className="gap-2"
         >
           <Plus className="h-4 w-4" />
           Add Application
-        </button>
+        </VerifiedActionButton>
       </div>
     </section>
   );

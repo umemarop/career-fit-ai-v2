@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/features/auth/useAuth";
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
@@ -10,6 +12,8 @@ import { normalizeApiError } from "@/utils/api-error";
 import type { RegisterFormInput } from "@/types/auth.types";
 
 export function RegisterForm() {
+  const router = useRouter();
+  const { login } = useAuth();
   const [form, setForm] = useState<RegisterFormInput>({
     email: "",
     password: "",
@@ -19,7 +23,6 @@ export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (field: keyof RegisterFormInput, value: string) => {
@@ -33,7 +36,6 @@ export function RegisterForm() {
     event.preventDefault();
 
     setErrorMessage("");
-    setSuccessMessage("");
 
     if (!form.email.trim()) {
       setErrorMessage("Email is required.");
@@ -63,17 +65,20 @@ export function RegisterForm() {
     try {
       setIsSubmitting(true);
 
-      const result = await authService.register({
-        email: form.email.trim(),
+      const email = form.email.trim();
+
+      await authService.register({
+        email,
         password: form.password,
         confirmPassword: form.confirmPassword,
       });
 
-      console.log("Register success:", result);
+      await login({
+        email,
+        password: form.password,
+      });
 
-      setSuccessMessage(
-        "Account created successfully. Please check your email to verify your account.",
-      );
+      router.replace("/dashboard?registered=1");
     } catch (error) {
       const normalizedError = normalizeApiError(error);
       setErrorMessage(normalizedError.message);
@@ -97,12 +102,6 @@ export function RegisterForm() {
         {errorMessage ? (
           <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
             {errorMessage}
-          </div>
-        ) : null}
-
-        {successMessage ? (
-          <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
-            {successMessage}
           </div>
         ) : null}
 

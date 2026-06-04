@@ -7,6 +7,8 @@ import type {
   RefreshResponse,
   RegisterInput,
   RegisterResponse,
+  ForgotPasswordInput,
+  ResetPasswordInput,
 } from "@/types/auth.types";
 
 export const authService = {
@@ -32,6 +34,32 @@ export const authService = {
 
   async logout(): Promise<MessageResponse> {
     const response = await api.post<MessageResponse>("/auth/logout");
+    return response.data;
+  },
+
+  async forgotPassword(input: ForgotPasswordInput): Promise<MessageResponse> {
+    const response = await api.post<MessageResponse>(
+      "/auth/forgot-password",
+      input,
+    );
+
+    return response.data;
+  },
+
+  async resetPassword(input: ResetPasswordInput): Promise<MessageResponse> {
+    const response = await api.post<MessageResponse>(
+      "/auth/reset-password",
+      input,
+    );
+
+    return response.data;
+  },
+
+  async verifyEmail(token: string): Promise<MessageResponse> {
+    const response = await api.get<MessageResponse>("/auth/verify-email", {
+      params: { token },
+    });
+
     return response.data;
   },
 };

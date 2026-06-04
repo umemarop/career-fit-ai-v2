@@ -1,5 +1,7 @@
 import { Loader2, Upload, WandSparkles } from "lucide-react";
 
+import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
+
 type ProfileHeaderProps = {
   isAutofilling: boolean;
   onAutofillFromSavedResume: () => void;
@@ -25,7 +27,7 @@ export function ProfileHeader({
       </div>
 
       <div className="mt-5 flex flex-wrap gap-3">
-        <button
+        <VerifiedActionButton
           type="button"
           disabled={isAutofilling}
           onClick={onAutofillFromSavedResume}
@@ -37,9 +39,9 @@ export function ProfileHeader({
             <WandSparkles className="h-4 w-4" />
           )}
           Autofill from saved resume
-        </button>
+        </VerifiedActionButton>
 
-        <button
+        <VerifiedActionButton
           type="button"
           disabled={isAutofilling}
           onClick={onUploadResumeAutofillClick}
@@ -47,7 +49,7 @@ export function ProfileHeader({
         >
           <Upload className="h-4 w-4" />
           Upload resume & autofill
-        </button>
+        </VerifiedActionButton>
       </div>
     </section>
   );

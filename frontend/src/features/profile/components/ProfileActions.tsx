@@ -1,5 +1,7 @@
 import { Loader2, Save, X } from "lucide-react";
 
+import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
+
 type ProfileActionsProps = {
   isSaving: boolean;
   showCancel?: boolean;
@@ -27,7 +29,7 @@ export function ProfileActions({
         </button>
       )}
 
-      <button
+      <VerifiedActionButton
         type="button"
         disabled={isSaving}
         onClick={onSave}
@@ -39,7 +41,7 @@ export function ProfileActions({
           <Save className="h-4 w-4" />
         )}
         {isSaving ? "Saving..." : "Save changes"}
-      </button>
+      </VerifiedActionButton>
     </div>
   );
 }

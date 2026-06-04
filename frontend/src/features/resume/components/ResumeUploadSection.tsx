@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { FileUp } from "lucide-react";
 
+import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
+
 type ResumeUploadSectionProps = {
   onSelectFile: (file: File) => void;
   isUploading: boolean;
@@ -92,14 +94,14 @@ export function ResumeUploadSection({
           latest version.
         </p>
 
-        <button
+        <VerifiedActionButton
           type="button"
           onClick={handleBrowseClick}
           disabled={isUploading}
-          className="mt-6 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-6"
         >
           {isUploading ? "Saving..." : "Browse file"}
-        </button>
+        </VerifiedActionButton>
 
         <p className="mt-3 text-xs text-slate-400">
           PDF only. Recommended file size under 5MB.
