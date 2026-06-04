@@ -13,6 +13,8 @@ import {
   forgotPasswordController,
   resetPasswordController,
   changePasswordController,
+  deleteAccountController,
+  resendVerificationEmailController,
 } from "./auth.controller.js";
 import {
   registerSchema,
@@ -41,6 +43,13 @@ router.post(
 router.get("/verify-email", validate(verifyEmailSchema), verifyEmailController);
 
 router.post(
+  "/resend-verification",
+  protect,
+  authLimiter,
+  resendVerificationEmailController,
+);
+
+router.post(
   "/forgot-password",
   authLimiter,
   validate(forgotPasswordSchema),
@@ -63,6 +72,8 @@ router.patch(
 );
 // Protected auth routes
 router.get("/me", protect, getMe);
+router.delete("/me", protect, authLimiter, deleteAccountController);
+
 router.post("/logout", validate(logoutSchema), logout);
 router.post("/logout-others", protect, logoutOthers);
 router.post("/logout-all", protect, logoutAll);

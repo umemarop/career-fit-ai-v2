@@ -151,6 +151,53 @@ export const authPaths = {
         },
       },
     },
+
+    delete: {
+      tags: ["Authentication"],
+      summary: "Delete current account",
+      description:
+        "Soft delete the currently authenticated user account, revoke all refresh/auth tokens, and clear the refresh token cookie.",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        200: {
+          description: "Account deleted successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  status: { type: "string", example: "success" },
+                  message: {
+                    type: "string",
+                    example: "Account deleted successfully",
+                  },
+                },
+              },
+            },
+          },
+        },
+        401: {
+          description: "Unauthorized",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/ErrorResponse",
+              },
+            },
+          },
+        },
+        404: {
+          description: "User not found",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/ErrorResponse",
+              },
+            },
+          },
+        },
+      },
+    },
   },
   "/api/v2/auth/refresh": {
     post: {
@@ -202,6 +249,50 @@ export const authPaths = {
         },
         400: {
           description: "Invalid or expired verification token",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+  },
+  "/api/v2/auth/resend-verification": {
+    post: {
+      tags: ["Authentication"],
+      summary: "Resend verification email",
+      description:
+        "Send a new email verification link to the currently authenticated user. Only unverified users can request a new verification email.",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        200: {
+          description: "Verification email sent successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  status: { type: "string", example: "success" },
+                  message: {
+                    type: "string",
+                    example: "Verification email sent successfully",
+                  },
+                },
+              },
+            },
+          },
+        },
+        400: {
+          description: "Email is already verified",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+        401: {
+          description: "Unauthorized",
           content: {
             "application/json": {
               schema: { $ref: "#/components/schemas/ErrorResponse" },

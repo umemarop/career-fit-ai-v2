@@ -209,6 +209,45 @@ export const getMeUser = async (userId: string) => {
   return user;
 };
 
+export const resendEmailVerification = async (
+  userId: string,
+): Promise<void> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      email: true,
+      isEmailVerified: true,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  if (user.isEmailVerified) {
+    throw new AppError("Email is already verified", 400);
+  }
+
+  const verificationToken = await createEmailVerificationToken(user.id);
+
+  const verificationUrl = `${env.CLIENT_URL}/verify-email?token=${verificationToken}`;
+
+  logger.info("Email verification resend event emitted", {
+    userId: user.id,
+    email: user.email,
+  });
+
+  eventBus.emit("auth.emailVerificationRequested", {
+    userId: user.id,
+    email: user.email,
+    name: null,
+    verificationUrl,
+  });
+};
+
 export const verifyEmail = async (token: string) => {
   const authToken = await verifyAuthToken(
     token,
@@ -392,4 +431,61 @@ export const changePassword = async (
   return {
     refreshToken: newRefreshToken,
   };
+};
+
+export const deleteAccount = async (userId: string): Promise<void> => {
+  const now = new Date();
+
+  await prisma.$transaction(async (tx) => {
+    const user = await tx.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        deletedAt: true,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    if (user.deletedAt) {
+      throw new AppError("Account is already deleted", 400);
+    }
+
+    await tx.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        deletedAt: now,
+      },
+    });
+
+    await tx.refreshToken.updateMany({
+      where: {
+        userId,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: now,
+      },
+    });
+
+    await tx.authToken.updateMany({
+      where: {
+        userId,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: now,
+      },
+    });
+  });
+
+  logger.info("Account soft deleted", {
+    userId,
+  });
 };

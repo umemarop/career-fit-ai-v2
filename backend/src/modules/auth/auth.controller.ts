@@ -16,10 +16,12 @@ import {
   logoutCurrentSession,
   logoutAllSessions,
   logoutOtherSessions,
+  resendEmailVerification,
   verifyEmail,
   forgotPassword,
   resetPassword,
   changePassword,
+  deleteAccount,
 } from "./auth.service.js";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
@@ -141,6 +143,16 @@ export const getMe = catchAsync(
     });
   },
 );
+export const resendVerificationEmailController = catchAsync(
+  async (req: Request, res: Response) => {
+    await resendEmailVerification(req.user!.id);
+
+    res.status(200).json({
+      status: "success",
+      message: "Verification email sent successfully",
+    });
+  },
+);
 
 export const verifyEmailController = catchAsync(
   async (req: Request, res: Response) => {
@@ -193,6 +205,19 @@ export const changePasswordController = catchAsync(
     res.status(200).json({
       status: "success",
       message: "Password changed successfully",
+    });
+  },
+);
+
+export const deleteAccountController = catchAsync(
+  async (req: Request, res: Response) => {
+    await deleteAccount(req.user!.id);
+
+    res.clearCookie(refreshTokenCookieName, refreshTokenCookieOptions);
+
+    res.status(200).json({
+      status: "success",
+      message: "Account deleted successfully",
     });
   },
 );

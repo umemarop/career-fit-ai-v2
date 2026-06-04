@@ -15,7 +15,7 @@ const navigationItems = [
     icon: LayoutDashboard,
   },
   {
-    label: "Profile",
+    label: "Career Profile",
     href: "/profile",
     icon: User,
   },

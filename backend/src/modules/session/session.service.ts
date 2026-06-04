@@ -159,6 +159,10 @@ export const getUserSessions = async (
   const sessions = await prisma.refreshToken.findMany({
     where: {
       userId,
+      revokedAt: null,
+      expiresAt: {
+        gt: new Date(),
+      },
     },
     orderBy: {
       createdAt: "desc",
