@@ -35,10 +35,10 @@ export function AvatarSection({
 
           <div>
             <h2 className="text-base font-semibold text-slate-950">
-              Profile photo
+              Career profile photo
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Upload a professional avatar for your account.
+              Upload a professional photo for your career profile.
             </p>
 
             {!canManageAvatar && (

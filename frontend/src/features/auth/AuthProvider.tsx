@@ -19,6 +19,8 @@ type AuthContextValue = {
   isAuthenticated: boolean;
   login: (input: LoginInput) => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
+  clearAuthState: () => void;
 };
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -58,15 +60,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setAccessToken(result.accessToken);
     setUser(result.user);
   }, []);
+  const refreshUser = useCallback(async () => {
+    const currentUser = await authService.getMe();
+
+    setUser(currentUser);
+  }, []);
+  const clearAuthState = useCallback(() => {
+    clearAccessToken();
+    setUser(null);
+  }, []);
 
   const logout = useCallback(async () => {
     try {
       await authService.logout();
     } finally {
-      clearAccessToken();
-      setUser(null);
+      clearAuthState();
     }
-  }, []);
+  }, [clearAuthState]);
 
   const value = useMemo(
     () => ({
@@ -75,8 +85,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       isAuthenticated: Boolean(user),
       login,
       logout,
+      refreshUser,
+      clearAuthState,
     }),
-    [user, isLoading, login, logout],
+    [user, isLoading, login, logout, refreshUser, clearAuthState],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
