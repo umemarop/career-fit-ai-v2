@@ -49,7 +49,7 @@ export function useAdminPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const buildUsersQuery = useCallback(
-    (targetPage = page) => {
+    (targetPage: number) => {
       return {
         keyword: filters.keyword.trim() || undefined,
         role: filters.role === "ALL" ? undefined : filters.role,
@@ -63,7 +63,7 @@ export function useAdminPage() {
         limit: ADMIN_USERS_LIMIT,
       };
     },
-    [filters, page],
+    [filters],
   );
 
   const fetchStats = useCallback(async () => {

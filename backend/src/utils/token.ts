@@ -13,7 +13,6 @@ type AccessTokenPayload = {
 type JwtExpiresIn = NonNullable<SignOptions["expiresIn"]>;
 
 export const generateAccessToken = (payload: AccessTokenPayload): string => {
-  console.log("JWT_EXPIRES_IN:", env.JWT_EXPIRES_IN);
   return jwt.sign(payload, env.JWT_SECRET, {
     expiresIn: env.JWT_EXPIRES_IN as JwtExpiresIn,
   });
