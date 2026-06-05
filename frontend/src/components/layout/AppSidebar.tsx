@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   BarChart3,
@@ -5,43 +7,59 @@ import {
   FileText,
   LayoutDashboard,
   Settings,
+  ShieldCheck,
   User,
 } from "lucide-react";
 
-const navigationItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Career Profile",
-    href: "/profile",
-    icon: User,
-  },
-  {
-    label: "Resume",
-    href: "/resume",
-    icon: FileText,
-  },
-  {
-    label: "Applications",
-    href: "/applications",
-    icon: Briefcase,
-  },
-  {
-    label: "Analysis",
-    href: "/analysis",
-    icon: BarChart3,
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
+import { useAuth } from "@/features/auth/useAuth";
 
 export function AppSidebar() {
+  const { user } = useAuth();
+
+  const isAdmin = user?.role === "ADMIN";
+
+  const navigationItems = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      label: "Career Profile",
+      href: "/profile",
+      icon: User,
+    },
+    {
+      label: "Resume",
+      href: "/resume",
+      icon: FileText,
+    },
+    {
+      label: "Applications",
+      href: "/applications",
+      icon: Briefcase,
+    },
+    {
+      label: "Analysis",
+      href: "/analysis",
+      icon: BarChart3,
+    },
+    ...(isAdmin
+      ? [
+          {
+            label: "Admin",
+            href: "/admin",
+            icon: ShieldCheck,
+          },
+        ]
+      : []),
+    {
+      label: "Settings",
+      href: "/settings",
+      icon: Settings,
+    },
+  ];
+
   return (
     <aside className="hidden min-h-screen w-64 border-r border-slate-200 bg-white px-4 py-5 lg:flex lg:flex-col">
       <div className="mb-8">

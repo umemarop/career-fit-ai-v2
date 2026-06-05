@@ -10,7 +10,10 @@ export const getAdminUsersSchema = z.object({
 
       role: z.enum(roleValues).optional(),
 
-      verified: z.coerce.boolean().optional(),
+      verified: z
+        .enum(["true", "false"])
+        .transform((value) => value === "true")
+        .optional(),
 
       status: z.enum(userStatusValues).optional(),
 
