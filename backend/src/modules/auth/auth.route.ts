@@ -15,6 +15,8 @@ import {
   changePasswordController,
   deleteAccountController,
   resendVerificationEmailController,
+  getGoogleAuthUrlController,
+  googleCallbackController,
 } from "./auth.controller.js";
 import {
   registerSchema,
@@ -25,6 +27,7 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema,
   changePasswordSchema,
+  googleCallbackSchema,
 } from "./auth.validation.js";
 
 import { validate } from "../../middlewares/validate.middleware.js";
@@ -34,6 +37,16 @@ const router = Router();
 // Public auth routes
 router.post("/register", authLimiter, validate(registerSchema), register);
 router.post("/login", authLimiter, validate(loginSchema), login);
+
+router.get("/google/url", authLimiter, getGoogleAuthUrlController);
+
+router.get(
+  "/google/callback",
+  authLimiter,
+  validate(googleCallbackSchema),
+  googleCallbackController,
+);
+
 router.post(
   "/refresh",
   authLimiter,

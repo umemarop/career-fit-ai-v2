@@ -7,10 +7,13 @@ import type {
   ForgotPasswordInput,
   ResetPasswordInput,
   ChangePasswordInput,
+  GoogleCallbackInput,
 } from "./auth.validation.js";
+import { getGoogleAuthUrl } from "./google-oauth.service.js";
 import {
   registerUser,
   loginUser,
+  loginWithGoogle,
   getMeUser,
   refreshAccessToken,
   logoutCurrentSession,
@@ -218,6 +221,42 @@ export const deleteAccountController = catchAsync(
     res.status(200).json({
       status: "success",
       message: "Account deleted successfully",
+    });
+  },
+);
+
+export const getGoogleAuthUrlController = catchAsync(
+  async (req: Request, res: Response) => {
+    const url = getGoogleAuthUrl();
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        url,
+      },
+    });
+  },
+);
+
+export const googleCallbackController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { code } = req.validated?.query as GoogleCallbackInput;
+
+    const metadata = getRequestMetadata(req);
+
+    const { user, accessToken, refreshToken } = await loginWithGoogle(
+      code,
+      metadata,
+    );
+
+    res.cookie(refreshTokenCookieName, refreshToken, refreshTokenCookieOptions);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        user,
+        accessToken,
+      },
     });
   },
 );

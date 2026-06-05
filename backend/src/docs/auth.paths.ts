@@ -112,6 +112,99 @@ export const authPaths = {
       },
     },
   },
+  "/api/v2/auth/google/url": {
+    get: {
+      tags: ["Authentication"],
+      summary: "Get Google OAuth login URL",
+      description:
+        "Generate a Google OAuth URL that the frontend can use to redirect the user to Google login.",
+      responses: {
+        200: {
+          description: "Google OAuth URL generated successfully",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/GoogleAuthUrlResponse",
+              },
+            },
+          },
+        },
+        429: {
+          description: "Too many authentication requests",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  "/api/v2/auth/google/callback": {
+    get: {
+      tags: ["Authentication"],
+      summary: "Handle Google OAuth callback",
+      description:
+        "Exchange the Google authorization code for Google tokens, verify the ID token, create or link a CareerFit user, issue a CareerFit access token, and set the refresh token cookie.",
+      parameters: [
+        {
+          name: "code",
+          in: "query",
+          required: true,
+          description: "Authorization code returned by Google.",
+          schema: {
+            type: "string",
+            example: "4/0AbCDxyz...",
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Google login completed successfully",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/AuthSuccessResponse",
+              },
+            },
+          },
+        },
+        400: {
+          description: "Missing or invalid Google authorization code",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+        401: {
+          description: "Invalid Google token or unverified Google email",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+        403: {
+          description: "Account is disabled",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+        429: {
+          description: "Too many authentication requests",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/ErrorResponse" },
+            },
+          },
+        },
+      },
+    },
+  },
 
   "/api/v2/auth/me": {
     get: {

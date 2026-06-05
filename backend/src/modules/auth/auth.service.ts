@@ -7,6 +7,10 @@ import { AppError } from "../../utils/appError.js";
 import { hashToken } from "../../utils/crypto.js";
 import { eventBus } from "../../events/eventBus.js";
 import {
+  exchangeCodeForGoogleTokens,
+  verifyGoogleIdToken,
+} from "./google-oauth.service.js";
+import {
   createEmailVerificationToken,
   verifyAuthToken,
   createPasswordResetToken,
@@ -110,6 +114,13 @@ export const loginUser = async (
     throw new AppError("Invalid email or password", 401);
   }
 
+  if (!user.password) {
+    throw new AppError(
+      "This account uses Google login. Please continue with Google.",
+      401,
+    );
+  }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
@@ -118,6 +129,91 @@ export const loginUser = async (
       email: user.email,
     });
     throw new AppError("Invalid email or password", 401);
+  }
+
+  const refreshToken = generateRefreshToken();
+
+  const session = await createSession({
+    userId: user.id,
+    refreshToken,
+    expiresAt: getRefreshTokenExpiresAt(),
+    metadata,
+  });
+
+  const accessToken = generateAccessToken({
+    userId: user.id,
+    role: user.role,
+    sessionId: session.id,
+  });
+
+  const { password: _, ...safeUser } = user;
+
+  return {
+    user: safeUser,
+    accessToken,
+    refreshToken,
+  };
+};
+
+export const loginWithGoogle = async (
+  code: string,
+  metadata: RequestMetadata,
+) => {
+  const googleTokens = await exchangeCodeForGoogleTokens(code);
+
+  if (!googleTokens.id_token) {
+    throw new AppError("Google ID token is missing", 401);
+  }
+
+  const googleUser = await verifyGoogleIdToken(googleTokens.id_token);
+
+  if (!googleUser.emailVerified) {
+    throw new AppError("Google email is not verified", 401);
+  }
+
+  let user = await prisma.user.findUnique({
+    where: {
+      googleId: googleUser.googleId,
+    },
+  });
+
+  if (user?.deletedAt) {
+    throw new AppError("This account has been disabled", 403);
+  }
+
+  if (!user) {
+    const existingUserByEmail = await prisma.user.findUnique({
+      where: {
+        email: googleUser.email.toLowerCase(),
+      },
+    });
+
+    if (existingUserByEmail?.deletedAt) {
+      throw new AppError("This account has been disabled", 403);
+    }
+
+    if (existingUserByEmail) {
+      user = await prisma.user.update({
+        where: {
+          id: existingUserByEmail.id,
+        },
+        data: {
+          googleId: googleUser.googleId,
+          isEmailVerified: true,
+          emailVerifiedAt: existingUserByEmail.emailVerifiedAt ?? new Date(),
+        },
+      });
+    } else {
+      user = await prisma.user.create({
+        data: {
+          email: googleUser.email.toLowerCase(),
+          password: null,
+          googleId: googleUser.googleId,
+          isEmailVerified: true,
+          emailVerifiedAt: new Date(),
+        },
+      });
+    }
   }
 
   const refreshToken = generateRefreshToken();
@@ -371,6 +467,13 @@ export const changePassword = async (
 
   if (!user) {
     throw new AppError("User not found", 404);
+  }
+
+  if (!user.password) {
+    throw new AppError(
+      "This account does not have a password. Please reset your password first.",
+      400,
+    );
   }
 
   const isPasswordCorrect = await bcrypt.compare(
