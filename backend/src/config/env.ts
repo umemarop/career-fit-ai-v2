@@ -12,7 +12,6 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1),
 
   JWT_EXPIRES_IN: z.string().min(1),
-
   REFRESH_TOKEN_EXPIRES_IN_DAYS: z.coerce.number().default(30),
 
   GEMINI_API_KEY: z.string().min(1),
@@ -20,6 +19,10 @@ const envSchema = z.object({
   CLIENT_URL: z.string().min(1).default("http://localhost:3000"),
 
   API_URL: z.string().min(1).default("http://localhost:4000/api/v2"),
+
+  GOOGLE_CLIENT_ID: z.string().min(1),
+  GOOGLE_CLIENT_SECRET: z.string().min(1),
+  GOOGLE_REDIRECT_URI: z.string().min(1),
 
   EMAIL_VERIFICATION_EXPIRES_MINUTES: z.coerce.number().positive(),
 

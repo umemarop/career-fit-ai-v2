@@ -101,3 +101,13 @@ export const changePasswordSchema = z.object({
 });
 
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>["body"];
+
+export const googleCallbackSchema = z.object({
+  query: z
+    .object({
+      code: z.string().min(1, "Google authorization code is required"),
+    })
+    .strict(),
+});
+
+export type GoogleCallbackInput = z.infer<typeof googleCallbackSchema>["query"];

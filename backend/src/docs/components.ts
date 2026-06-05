@@ -327,6 +327,39 @@ export const components = {
         },
       },
     },
+    AuthSuccessResponse: {
+      type: "object",
+      properties: {
+        status: { type: "string", example: "success" },
+        data: {
+          type: "object",
+          properties: {
+            user: { $ref: "#/components/schemas/User" },
+            accessToken: {
+              type: "string",
+              example: "jwt-access-token",
+            },
+          },
+        },
+      },
+    },
+
+    GoogleAuthUrlResponse: {
+      type: "object",
+      properties: {
+        status: { type: "string", example: "success" },
+        data: {
+          type: "object",
+          properties: {
+            url: {
+              type: "string",
+              example:
+                "https://accounts.google.com/o/oauth2/v2/auth?client_id=...",
+            },
+          },
+        },
+      },
+    },
     UpsertProfileInput: {
       type: "object",
       required: ["skills", "experienceLevel"],
