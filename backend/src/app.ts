@@ -19,6 +19,7 @@ import profileRouter from "./modules/profile/profile.route.js";
 import resumeRouter from "./modules/resume/resume.route.js";
 import jobAnalysisRouter from "./modules/jobAnalysis/jobAnalysis.route.js";
 import applicationRouter from "./modules/application/application.route.js";
+import aiUsageRouter from "./modules/aiUsage/aiUsage.route.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -85,6 +86,7 @@ app.use("/api/v2/admin", adminRouter);
 app.use("/api/v2/profile", profileRouter);
 app.use("/api/v2/resume", resumeRouter);
 app.use("/api/v2/job-analysis", jobAnalysisRouter);
+app.use("/api/v2/ai-usage", aiUsageRouter);
 app.use("/api/v2/applications", applicationRouter);
 
 app.use((req, res, next) => {

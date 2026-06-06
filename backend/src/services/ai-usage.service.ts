@@ -116,3 +116,24 @@ export const recordAiUsage = async ({
     },
   });
 };
+
+export const getAiUsageSummary = async (input: CheckAiUsageLimitInput) => {
+  const { userId, ipAddress } = input;
+
+  if (!userId && !ipAddress) {
+    throw new AppError("AI usage identity is required.", 400);
+  }
+
+  const limit = getAiUsageLimit(input);
+
+  const used = await prisma.aiUsage.count({
+    where: buildAiUsageWhere(input),
+  });
+
+  return {
+    type: input.type,
+    limit,
+    used,
+    remaining: Math.max(limit - used, 0),
+  };
+};

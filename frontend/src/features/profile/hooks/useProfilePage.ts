@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AxiosError } from "axios";
 
+import { useAiUsage } from "@/contexts/ai-usage-context";
+
 import {
   DEFAULT_PROFILE_FORM_STATE,
   formStateToUpsertProfileInput,
@@ -23,6 +25,7 @@ import { normalizeApiError } from "@/utils/api-error";
 import { getPublicFileUrl } from "@/utils/file-url";
 
 export function useProfilePage() {
+  const { refreshAiUsage } = useAiUsage();
   const [profile, setProfile] = useState<Profile | null>(null);
 
   const [formState, setFormState] = useState<ProfileFormState>(
@@ -210,6 +213,7 @@ export function useProfilePage() {
       const profileDraft = await autofillProfileFromSavedResume();
 
       applyProfileDraft(profileDraft);
+      await refreshAiUsage();
     } catch (error) {
       const normalizedError = normalizeApiError(error);
       setErrorMessage(normalizedError.message);
@@ -237,6 +241,7 @@ export function useProfilePage() {
       const profileDraft = await autofillProfileFromUploadedResume(file);
 
       applyProfileDraft(profileDraft);
+      await refreshAiUsage();
     } catch (error) {
       const normalizedError = normalizeApiError(error);
       setErrorMessage(normalizedError.message);

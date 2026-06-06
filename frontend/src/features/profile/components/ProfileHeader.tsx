@@ -1,4 +1,5 @@
 import { Loader2, Upload, WandSparkles } from "lucide-react";
+import { useAiUsage } from "@/contexts/ai-usage-context";
 
 import { VerifiedActionButton } from "@/components/common/VerifiedActionButton";
 
@@ -13,6 +14,9 @@ export function ProfileHeader({
   onAutofillFromSavedResume,
   onUploadResumeAutofillClick,
 }: ProfileHeaderProps) {
+  const { usage } = useAiUsage();
+
+  const resumeAutofillUsage = usage?.resumeAutofill;
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <div>
@@ -51,6 +55,15 @@ export function ProfileHeader({
           Upload resume & autofill
         </VerifiedActionButton>
       </div>
+      {resumeAutofillUsage ? (
+        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+          <WandSparkles className="h-4 w-4" />
+          <span>
+            {resumeAutofillUsage.remaining} autofills remaining today ·{" "}
+            {resumeAutofillUsage.used}/{resumeAutofillUsage.limit} used
+          </span>
+        </div>
+      ) : null}
     </section>
   );
 }

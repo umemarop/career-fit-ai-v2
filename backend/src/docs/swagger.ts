@@ -7,6 +7,7 @@ import { sessionPaths } from "./session.paths.js";
 import { profilePaths } from "./profile.paths.js";
 import { resumePaths } from "./resume.paths.js";
 import { jobAnalysisPaths } from "./jobAnalysis.paths.js";
+import { aiUsagePaths } from "./aiUsage.paths.js";
 import { applicationPaths } from "./application.paths.js";
 import { adminPaths } from "./admin.paths.js";
 import { healthPaths } from "./health.paths.js";
@@ -35,7 +36,7 @@ const options: swaggerJSDoc.Options = {
       title: "CareerFit AI v2 API",
       version: "2.0.0",
       description:
-        "CareerFit AI v2 backend API for authentication, sessions, profiles, resumes, job analysis, applications, admin management, and health checks.",
+        "CareerFit AI v2 backend API for authentication, sessions, profiles, resumes, job analysis, AI usage limits, applications, admin management, and health checks.",
       contact: {
         name: "Sanghun Han",
         email: "umemarop@gmail.com",
@@ -62,6 +63,10 @@ const options: swaggerJSDoc.Options = {
         description: "AI-powered job analysis endpoints",
       },
       {
+        name: "AI Usage",
+        description: "AI usage limit and daily usage status endpoints",
+      },
+      {
         name: "Application",
         description: "Job application tracking endpoints",
       },
@@ -80,6 +85,7 @@ const options: swaggerJSDoc.Options = {
       ...profilePaths,
       ...resumePaths,
       ...jobAnalysisPaths,
+      ...aiUsagePaths,
       ...applicationPaths,
       ...adminPaths,
     },

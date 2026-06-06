@@ -1,5 +1,10 @@
+import { Sparkles } from "lucide-react";
+
+import type { PublicAiUsage } from "@/types/ai-usage.types";
+
 type PublicAnalysisFormProps = {
   jobDescription: string;
+  guestUsage: PublicAiUsage | null;
   isLoading: boolean;
   onJobDescriptionChange: (value: string) => void;
   onSubmit: () => void;
@@ -10,6 +15,7 @@ const MAX_JOB_DESCRIPTION_LENGTH = 10000;
 
 export function PublicAnalysisForm({
   jobDescription,
+  guestUsage,
   isLoading,
   onJobDescriptionChange,
   onSubmit,
@@ -74,10 +80,34 @@ export function PublicAnalysisForm({
         {isLoading ? "Analyzing..." : "Analyze job"}
       </button>
 
-      <p className="mt-3 text-xs leading-5 text-slate-500">
-        Guest analysis gives a quick role breakdown. Sign up to unlock
-        personalized fit scores, recommendations, and saved history.
-      </p>
+      <div className="mt-4 space-y-3">
+        {guestUsage ? (
+          guestUsage.remaining > 0 ? (
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+              <Sparkles className="h-4 w-4" />
+              <span>
+                {guestUsage.remaining} free guest analyses remaining today ·{" "}
+                {guestUsage.used}/{guestUsage.limit} used
+              </span>
+            </div>
+          ) : (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+              <p className="text-sm font-semibold text-amber-800">
+                No free guest analyses remaining today.
+              </p>
+
+              <p className="mt-1 text-xs text-amber-700">
+                Create your free account to continue analyzing jobs.
+              </p>
+            </div>
+          )
+        ) : null}
+
+        <p className="text-xs leading-5 text-slate-500">
+          Guest analysis gives a quick role breakdown. Create your free account
+          to unlock personalized fit scores, recommendations, and saved history.
+        </p>
+      </div>
     </div>
   );
 }

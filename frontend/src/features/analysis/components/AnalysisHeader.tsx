@@ -1,6 +1,12 @@
 import { Sparkles } from "lucide-react";
 
+import { useAiUsage } from "@/contexts/ai-usage-context";
+
 export function AnalysisHeader() {
+  const { usage } = useAiUsage();
+
+  const jobAnalysisUsage = usage?.jobAnalysis;
+
   return (
     <div className="flex items-start justify-between gap-4">
       <div>
@@ -17,6 +23,16 @@ export function AnalysisHeader() {
           Paste a job description and get a personalized fit analysis based on
           your profile, skills, and career preferences.
         </p>
+
+        {jobAnalysisUsage ? (
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+            <Sparkles className="h-4 w-4" />
+            <span>
+              {jobAnalysisUsage.remaining} analyses remaining today ·{" "}
+              {jobAnalysisUsage.used}/{jobAnalysisUsage.limit} used
+            </span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
