@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+import { useAiUsage } from "@/contexts/ai-usage-context";
 import { applicationService } from "@/services/application.service";
 import { jobAnalysisService } from "@/services/job-analysis.service";
 import type {
@@ -48,6 +49,7 @@ const isEmailVerificationError = (message: string) => {
 
 export function useAnalysisPage() {
   const router = useRouter();
+  const { refreshAiUsage } = useAiUsage();
   const resultSectionRef = useRef<HTMLDivElement | null>(null);
 
   const [jobDescription, setJobDescription] = useState("");
@@ -138,7 +140,7 @@ export function useAnalysisPage() {
       setSelectedAnalysisId(result.id);
       setJobDescription("");
 
-      await loadHistory(1);
+      await Promise.all([loadHistory(1), refreshAiUsage()]);
 
       toast.success("Analysis completed.");
       scrollToResultSection();

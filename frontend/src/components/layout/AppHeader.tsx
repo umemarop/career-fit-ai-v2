@@ -5,6 +5,7 @@ import { CheckCircle2, ChevronDown, LogOut, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { useAuth } from "@/features/auth/useAuth";
+import { useAiUsage } from "@/contexts/ai-usage-context";
 
 const getPageTitle = (pathname: string) => {
   if (pathname.startsWith("/profile")) return "Career Profile";
@@ -20,6 +21,7 @@ export function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth();
+  const { usage, isLoading: isAiUsageLoading } = useAiUsage();
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,6 +29,7 @@ export function AppHeader() {
   const pageTitle = getPageTitle(pathname);
   const initial = user?.email?.[0]?.toUpperCase() ?? "U";
   const isVerified = Boolean(user?.isEmailVerified);
+  const jobAnalysisUsage = usage?.jobAnalysis;
 
   const handleGoToSettings = () => {
     setIsMenuOpen(false);
@@ -63,6 +66,20 @@ export function AppHeader() {
       </div>
 
       <div className="relative flex items-center gap-3" ref={dropdownRef}>
+        <div
+          className="hidden rounded-full border border-indigo-100 bg-indigo-50 px-4 py-1.5 text-xs font-semibold text-indigo-700 sm:block"
+          title="Today's Job Analysis usage"
+        >
+          {isAiUsageLoading ? (
+            <span>AI --/--</span>
+          ) : jobAnalysisUsage ? (
+            <span>
+              Analysis {jobAnalysisUsage.used}/{jobAnalysisUsage.limit}
+            </span>
+          ) : (
+            <span>AI --/--</span>
+          )}
+        </div>
         <div className="text-right">
           <p className="text-sm font-medium text-slate-900">
             {user?.email ?? "User"}
