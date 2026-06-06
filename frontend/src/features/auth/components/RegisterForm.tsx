@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { GoogleOAuthButton } from "@/features/auth/components/GoogleOAuthButton";
 import { authService } from "@/services/auth.service";
 import { normalizeApiError } from "@/utils/api-error";
 import type { RegisterFormInput } from "@/types/auth.types";
@@ -14,6 +15,7 @@ import type { RegisterFormInput } from "@/types/auth.types";
 export function RegisterForm() {
   const router = useRouter();
   const { login } = useAuth();
+
   const [form, setForm] = useState<RegisterFormInput>({
     email: "",
     password: "",
@@ -192,6 +194,22 @@ export function RegisterForm() {
           {isSubmitting ? "Creating account..." : "Create account"}
         </Button>
       </form>
+
+      <div className="space-y-4">
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-slate-200" />
+          </div>
+
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-2 text-slate-500">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <GoogleOAuthButton onError={setErrorMessage} />
+      </div>
 
       <p className="text-center text-sm text-slate-600">
         Already have an account?{" "}

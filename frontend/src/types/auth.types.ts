@@ -69,3 +69,18 @@ export type MessageResponse = {
   status: "success";
   message: string;
 };
+
+export type GoogleAuthUrlResponse = {
+  status: "success";
+  data: {
+    url: string;
+  };
+};
+
+export type GoogleCallbackResponse = {
+  status: "success";
+  data: {
+    user: AuthUser;
+    accessToken: string;
+  };
+};

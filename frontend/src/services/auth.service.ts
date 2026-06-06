@@ -9,6 +9,8 @@ import type {
   RegisterResponse,
   ForgotPasswordInput,
   ResetPasswordInput,
+  GoogleAuthUrlResponse,
+  GoogleCallbackResponse,
 } from "@/types/auth.types";
 
 export const authService = {
@@ -61,5 +63,22 @@ export const authService = {
     });
 
     return response.data;
+  },
+  async getGoogleAuthUrl(): Promise<string> {
+    const response = await api.get<GoogleAuthUrlResponse>("/auth/google/url");
+    return response.data.data.url;
+  },
+
+  async loginWithGoogleCode(
+    code: string,
+  ): Promise<GoogleCallbackResponse["data"]> {
+    const response = await api.get<GoogleCallbackResponse>(
+      "/auth/google/callback",
+      {
+        params: { code },
+      },
+    );
+
+    return response.data.data;
   },
 };

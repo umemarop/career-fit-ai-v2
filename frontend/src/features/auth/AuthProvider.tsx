@@ -21,6 +21,7 @@ type AuthContextValue = {
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   clearAuthState: () => void;
+  completeOAuthLogin: (data: { user: AuthUser; accessToken: string }) => void;
 };
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -60,11 +61,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setAccessToken(result.accessToken);
     setUser(result.user);
   }, []);
+
+  const completeOAuthLogin = useCallback(
+    (data: { user: AuthUser; accessToken: string }) => {
+      setAccessToken(data.accessToken);
+      setUser(data.user);
+    },
+    [],
+  );
+
   const refreshUser = useCallback(async () => {
     const currentUser = await authService.getMe();
 
     setUser(currentUser);
   }, []);
+
   const clearAuthState = useCallback(() => {
     clearAccessToken();
     setUser(null);
@@ -83,12 +94,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       user,
       isLoading,
       isAuthenticated: Boolean(user),
+
       login,
       logout,
       refreshUser,
       clearAuthState,
+      completeOAuthLogin,
     }),
-    [user, isLoading, login, logout, refreshUser, clearAuthState],
+    [
+      user,
+      isLoading,
+      login,
+      logout,
+      refreshUser,
+      clearAuthState,
+      completeOAuthLogin,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

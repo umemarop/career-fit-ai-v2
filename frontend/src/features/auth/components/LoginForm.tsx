@@ -1,10 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { GoogleOAuthButton } from "@/features/auth/components/GoogleOAuthButton";
 import { useAuth } from "@/features/auth/useAuth";
 import { normalizeApiError } from "@/utils/api-error";
 import type { LoginInput } from "@/types/auth.types";
@@ -29,7 +31,7 @@ export function LoginForm() {
     }));
   };
 
-  const handleSubmit = async (event: React.SubmitEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setErrorMessage("");
@@ -139,6 +141,20 @@ export function LoginForm() {
         >
           {isSubmitting ? "Signing in..." : "Sign in"}
         </Button>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-slate-200" />
+          </div>
+
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-2 text-slate-500">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <GoogleOAuthButton onError={setErrorMessage} />
       </form>
 
       <p className="text-center text-sm text-slate-600">
