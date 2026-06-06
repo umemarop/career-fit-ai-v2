@@ -1,6 +1,12 @@
 import { generateAIJson } from "../../services/ai.service.js";
 import { AppError } from "../../utils/appError.js";
 
+import { AiUsageType } from "../../generated/prisma/enums.js";
+import {
+  checkAiUsageLimit,
+  recordAiUsage,
+} from "../../services/ai-usage.service.js";
+
 import {
   getMyResume,
   saveUploadedResume,
@@ -28,6 +34,11 @@ const generateDraftFromRawText = async (
   userId: string,
   rawText: string,
 ): Promise<ResumeProfileDraft> => {
+  await checkAiUsageLimit({
+    userId,
+    type: AiUsageType.RESUME_AUTOFILL,
+  });
+
   const prompt = buildResumeProfileDraftPrompt(rawText);
 
   const aiResult = await generateAIJson(prompt);
@@ -35,6 +46,11 @@ const generateDraftFromRawText = async (
   const profileDraft = validateResumeDraft(aiResult);
 
   await updateResumeParsedJson(userId, profileDraft);
+
+  await recordAiUsage({
+    userId,
+    type: AiUsageType.RESUME_AUTOFILL,
+  });
 
   return profileDraft;
 };

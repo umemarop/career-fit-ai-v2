@@ -54,6 +54,18 @@ export const cleanupSoftDeletedJobAnalyses = async () => {
   return result.count;
 };
 
+export const cleanupOldAiUsages = async () => {
+  const cutoff = daysAgo(RETENTION_DAYS.AI_USAGE);
+
+  const result = await prisma.aiUsage.deleteMany({
+    where: {
+      createdAt: { lt: cutoff },
+    },
+  });
+
+  return result.count;
+};
+
 export const cleanupSoftDeletedUsers = async () => {
   const cutoff = daysAgo(RETENTION_DAYS.SOFT_DELETED_USER);
 
@@ -69,6 +81,7 @@ export const cleanupSoftDeletedUsers = async () => {
 export const runCleanup = async () => {
   const authTokensDeleted = await cleanupExpiredAuthTokens();
   const refreshTokensDeleted = await cleanupExpiredRefreshTokens();
+  const aiUsagesDeleted = await cleanupOldAiUsages();
   const applicationsDeleted = await cleanupSoftDeletedApplications();
   const jobAnalysesDeleted = await cleanupSoftDeletedJobAnalyses();
   const usersDeleted = await cleanupSoftDeletedUsers();
@@ -76,6 +89,7 @@ export const runCleanup = async () => {
   return {
     authTokensDeleted,
     refreshTokensDeleted,
+    aiUsagesDeleted,
     applicationsDeleted,
     jobAnalysesDeleted,
     usersDeleted,
