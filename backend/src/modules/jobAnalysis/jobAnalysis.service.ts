@@ -16,13 +16,19 @@ import type {
 } from "./jobAnalysis.types.js";
 import { PAGINATION_DEFAULTS } from "../../constants/pagination.constants.js";
 import { generateAIJson } from "../../services/ai.service.js";
+import {
+  checkAiUsageLimit,
+  recordAiUsage,
+} from "../../services/ai-usage.service.js";
 import { AppError } from "../../utils/appError.js";
 import { prisma } from "../../prisma/client.js";
 
+import { AiUsageType } from "../../generated/prisma/enums.js";
 import type { Prisma, Recommendation } from "../../generated/prisma/client.js";
 
 interface AnalyzeGuestJobInput {
   jobDescription: string;
+  ipAddress: string;
 }
 
 interface AnalyzeJobForUserInput {
@@ -32,13 +38,27 @@ interface AnalyzeJobForUserInput {
 
 export const analyzeGuestJob = async ({
   jobDescription,
+  ipAddress,
 }: AnalyzeGuestJobInput): Promise<GuestJobAnalysisAIResponse> => {
+  await checkAiUsageLimit({
+    ipAddress,
+    type: AiUsageType.JOB_ANALYSIS,
+  });
+
   const prompt = buildGuestAnalysisPrompt({ jobDescription });
   const aiResponse = await generateAIJson(prompt);
+
   const parsed = guestJobAnalysisAIResponseSchema.safeParse(aiResponse);
+
   if (!parsed.success) {
     throw new AppError("AI response format is invalid", 500);
   }
+
+  await recordAiUsage({
+    ipAddress,
+    type: AiUsageType.JOB_ANALYSIS,
+  });
+
   return parsed.data;
 };
 
@@ -46,6 +66,11 @@ export const analyzeJobForUser = async ({
   userId,
   jobDescription,
 }: AnalyzeJobForUserInput) => {
+  await checkAiUsageLimit({
+    userId,
+    type: AiUsageType.JOB_ANALYSIS,
+  });
+
   const profile = await prisma.profile.findUnique({
     where: { userId },
     select: {
@@ -70,10 +95,13 @@ export const analyzeJobForUser = async ({
     profile,
   });
   const aiResponse = await generateAIJson(prompt);
+
   const parsed = userJobAnalysisAIResponseSchema.safeParse(aiResponse);
+
   if (!parsed.success) {
     throw new AppError("AI response format is invalid", 500);
   }
+
   const analysis = await prisma.jobAnalysis.create({
     data: {
       userId,
@@ -86,6 +114,12 @@ export const analyzeJobForUser = async ({
       result: parsed.data.result,
     },
   });
+
+  await recordAiUsage({
+    userId,
+    type: AiUsageType.JOB_ANALYSIS,
+  });
+
   return analysis;
 };
 

@@ -18,7 +18,17 @@ export const analyzeGuestJobController = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { jobDescription } = req.validated!
       .body as CreateGuestJobAnalysisInput;
-    const result = await analyzeGuestJob({ jobDescription });
+
+    const ipAddress = req.ip ?? req.socket.remoteAddress;
+
+    if (!ipAddress) {
+      return next(new AppError("Unable to identify guest request.", 400));
+    }
+    const result = await analyzeGuestJob({
+      jobDescription,
+      ipAddress,
+    });
+
     res.status(200).json({
       status: "success",
       data: result,
