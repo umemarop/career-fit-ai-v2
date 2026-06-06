@@ -33,6 +33,7 @@ model User {
   jobAnalyses   JobAnalysis[]
   applications  Application[]
   authTokens    AuthToken[]
+  aiUsages AiUsage[]
 
   @@index([deletedAt])
   @@index([role])
@@ -176,6 +177,23 @@ model Application {
   @@index([userId, deletedAt, appliedAt])
 }
 
+model AiUsage {
+  id        String      @id @default(cuid())
+
+  userId    String?
+  ipAddress String?
+
+  type      AiUsageType
+
+  createdAt DateTime    @default(now())
+
+  user      User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type, createdAt])
+  @@index([ipAddress, type, createdAt])
+  @@index([createdAt])
+}
+
 enum Role {
   USER
   ADMIN
@@ -228,4 +246,9 @@ enum RemotePreference {
   HYBRID
   ONSITE
   FLEXIBLE
+}
+
+enum AiUsageType {
+  JOB_ANALYSIS
+  RESUME_AUTOFILL
 }
