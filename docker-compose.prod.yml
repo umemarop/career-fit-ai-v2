@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: careerfit-postgres-prod
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tkdgns4864871
+      POSTGRES_DB: careerfit_prod
+
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: careerfit-backend-prod
+    restart: unless-stopped
+
+    ports:
+      - "4000:4000"
+
+    env_file:
+      - ./backend/.env.production
+
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: careerfit-frontend-prod
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - ./frontend/.env.production
+
+    depends_on:
+      - backend
+
+volumes:
+  postgres_prod_data:
