@@ -10,6 +10,8 @@ RUN npm install
 
 COPY . .
 
+ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/dummy?schema=public"
+
 RUN npm run build
 
 EXPOSE 4000
