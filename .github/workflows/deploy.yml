@@ -44,7 +44,7 @@ jobs:
         run: npm ci
 
       - name: Create backend test env
-        run: cp .env.ci.test .env.test
+        run: cp .env.ci.test.example .env.test
 
       - name: Run backend CI tests
         run: npm run ci:test
