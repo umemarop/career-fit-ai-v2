@@ -43,7 +43,7 @@ jobs:
       - name: Install backend dependencies
         run: npm ci
 
-      - name: Create backend test env
+            - name: Create backend test env
         run: |
           cat > .env.test << EOF
           NODE_ENV=test
@@ -59,6 +59,9 @@ jobs:
           RESEND_API_KEY=test-resend-key
           EMAIL_FROM=test@example.com
           GEMINI_API_KEY=test-gemini-key
+          GOOGLE_CLIENT_ID=test-google-client-id
+          GOOGLE_CLIENT_SECRET=test-google-client-secret
+          GOOGLE_REDIRECT_URI=http://localhost:4000/api/v2/auth/google/callback
           EOF
 
       - name: Run backend CI tests
