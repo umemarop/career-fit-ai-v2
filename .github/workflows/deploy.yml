@@ -50,7 +50,7 @@ jobs:
         run: npm run ci:test
 
       - name: Build backend
-        run: npm run build
+        run: npx dotenv -e .env.test --override -- npm run build
 
   frontend-ci:
     name: Frontend CI
