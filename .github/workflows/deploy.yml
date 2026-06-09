@@ -43,26 +43,8 @@ jobs:
       - name: Install backend dependencies
         run: npm ci
 
-            - name: Create backend test env
-        run: |
-          cat > .env.test << EOF
-          NODE_ENV=test
-          PORT=4000
-          DATABASE_URL="postgresql://postgres:postgres@localhost:5432/careerfit_test?schema=public"
-          JWT_SECRET=test-jwt-secret
-          JWT_EXPIRES_IN=15m
-          REFRESH_TOKEN_EXPIRES_IN_DAYS=7
-          EMAIL_VERIFICATION_EXPIRES_MINUTES=30
-          PASSWORD_RESET_EXPIRES_MINUTES=30
-          CLIENT_URL=http://localhost:3000
-          API_URL=http://localhost:4000
-          RESEND_API_KEY=test-resend-key
-          EMAIL_FROM=test@example.com
-          GEMINI_API_KEY=test-gemini-key
-          GOOGLE_CLIENT_ID=test-google-client-id
-          GOOGLE_CLIENT_SECRET=test-google-client-secret
-          GOOGLE_REDIRECT_URI=http://localhost:4000/api/v2/auth/google/callback
-          EOF
+      - name: Create backend test env
+        run: cp .env.ci.test .env.test
 
       - name: Run backend CI tests
         run: npm run ci:test
