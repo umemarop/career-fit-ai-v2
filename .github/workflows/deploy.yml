@@ -61,14 +61,8 @@ jobs:
           GEMINI_API_KEY=test-gemini-key
           EOF
 
-      - name: Generate Prisma client
-        run: npx dotenv -e .env.test --override -- npm run generate
-
-      - name: Run test database migrations
-        run: npm run test:migrate
-
-      - name: Run backend tests
-        run: npm test
+      - name: Run backend CI tests
+        run: npm run ci:test
 
       - name: Build backend
         run: npm run build
