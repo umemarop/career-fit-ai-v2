@@ -61,6 +61,9 @@ jobs:
           GEMINI_API_KEY=test-gemini-key
           EOF
 
+      - name: Generate Prisma client
+        run: npm run generate
+
       - name: Run test database migrations
         run: npm run test:migrate
 
