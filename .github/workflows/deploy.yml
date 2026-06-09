@@ -62,7 +62,7 @@ jobs:
           EOF
 
       - name: Generate Prisma client
-        run: npm run generate
+        run: npx dotenv -e .env.test --override -- npm run generate
 
       - name: Run test database migrations
         run: npm run test:migrate
