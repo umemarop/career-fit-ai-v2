@@ -50,6 +50,8 @@ export type JobAnalysisListItem = {
   fitScore: number;
   recommendation: Recommendation;
   createdAt: string;
+
+  applicationId: string | null;
 };
 
 export type JobAnalysisListQuery = {

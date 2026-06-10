@@ -15,6 +15,7 @@ type AnalysisHistoryItem = {
   fitScore: number;
   recommendation: Recommendation;
   createdAt: string;
+  applicationId: string | null;
 };
 
 type AnalysisHistoryTableProps = {
@@ -186,15 +187,26 @@ export function AnalysisHistoryTable({
                         </td>
 
                         <td className="px-6 py-4">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            disabled={isSelecting}
-                            onClick={() => onCreateApplication(analysis)}
-                          >
-                            Create Application
-                          </Button>
+                          {analysis.applicationId ? (
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              size="sm"
+                              disabled
+                            >
+                              Added
+                            </Button>
+                          ) : (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              disabled={isSelecting}
+                              onClick={() => onCreateApplication(analysis)}
+                            >
+                              Create Application
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     );

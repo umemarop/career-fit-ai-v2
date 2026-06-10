@@ -9,6 +9,7 @@ export interface JobAnalysisListItemResponse {
   fitScore: number;
   recommendation: Recommendation;
   createdAt: Date;
+  applicationId: string | null;
 }
 
 export interface JobAnalysisDetailResponse {

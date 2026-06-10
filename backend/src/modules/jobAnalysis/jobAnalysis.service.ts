@@ -198,6 +198,11 @@ export const getMyJobAnalyses = async (
         fitScore: true,
         recommendation: true,
         createdAt: true,
+        application: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy,
       skip,
@@ -211,7 +216,16 @@ export const getMyJobAnalyses = async (
   const totalPages = Math.ceil(total / limit);
 
   return {
-    analyses,
+    analyses: analyses.map((analysis) => ({
+      id: analysis.id,
+      jobTitle: analysis.jobTitle,
+      companyName: analysis.companyName,
+      location: analysis.location,
+      fitScore: analysis.fitScore,
+      recommendation: analysis.recommendation,
+      createdAt: analysis.createdAt,
+      applicationId: analysis.application?.id ?? null,
+    })),
     meta: {
       total,
       page,
