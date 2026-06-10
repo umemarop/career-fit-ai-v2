@@ -13,22 +13,22 @@ services:
       - postgres_prod_data:/var/lib/postgresql/data
 
   backend:
-  build:
-    context: ./backend
-  container_name: careerfit-backend-prod
-  restart: unless-stopped
+    build:
+      context: ./backend
+    container_name: careerfit-backend-prod
+    restart: unless-stopped
 
-  ports:
-    - "4000:4000"
+    ports:
+      - "4000:4000"
 
-  env_file:
-    - ./backend/.env.production
+    env_file:
+      - ./backend/.env.production
 
-  volumes:
-    - backend_uploads:/app/uploads
+    volumes:
+      - backend_uploads:/app/uploads
 
-  depends_on:
-    - postgres
+    depends_on:
+      - postgres
 
   frontend:
     build:
