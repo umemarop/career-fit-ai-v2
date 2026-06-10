@@ -16,29 +16,15 @@ https://career-fit-ai.com
 
 ---
 
-## 🎯 Demo Accounts
+## 🎯 Demo Account
 
-### Admin
+### Demo User
 
-Email:
+- Email: test@career-fit-ai.com
+- Password: CareerFit123!
 
-admin@career-fit-ai.com
-
-Password:
-
-CareerFit123!
-
----
-
-### User
-
-Email:
-
-test@career-fit-ai.com
-
-Password:
-
-CareerFit123!
+> Note:
+> Administrative accounts are not publicly accessible.
 
 ---
 
