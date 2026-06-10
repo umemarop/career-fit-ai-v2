@@ -303,6 +303,31 @@ PostgreSQL is used as the primary database for authentication, profiles, resumes
 
 ---
 
+## 📚 API Documentation
+
+Interactive API documentation is available through Swagger UI.
+
+The documentation includes:
+
+- Authentication APIs
+- Profile APIs
+- Resume APIs
+- Job Analysis APIs
+- Application APIs
+- Admin APIs
+
+Swagger provides request/response examples and endpoint details for easier API exploration and testing.
+
+### Development
+
+http://localhost:4000/api-docs
+
+### Production
+
+https://career-fit-ai.com/api-docs
+
+---
+
 ## 🚀 Infrastructure & Deployment
 
 Production environment includes:
