@@ -3,6 +3,7 @@ import type { JobType, RemotePreference } from "@/types/profile.types";
 
 type CareerPreferencesSectionProps = {
   formState: ProfileFormState;
+  fieldErrors?: Record<string, string>;
   onChange: <K extends keyof ProfileFormState>(
     key: K,
     value: ProfileFormState[K],
@@ -33,6 +34,7 @@ const remotePreferenceOptions: {
 export function CareerPreferencesSection({
   formState,
   onChange,
+  fieldErrors = {},
 }: CareerPreferencesSectionProps) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -55,6 +57,11 @@ export function CareerPreferencesSection({
             placeholder="Junior Backend Developer"
             className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
+          {fieldErrors.targetRole && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.targetRole}
+            </p>
+          )}
         </div>
 
         <div>
@@ -70,6 +77,11 @@ export function CareerPreferencesSection({
             placeholder="Backend Developer, Node.js Developer"
             className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
+          {fieldErrors.desiredRoles && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.desiredRoles}
+            </p>
+          )}
         </div>
 
         <div>
@@ -90,6 +102,12 @@ export function CareerPreferencesSection({
               </option>
             ))}
           </select>
+
+          {fieldErrors.preferredJobType && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.preferredJobType}
+            </p>
+          )}
         </div>
 
         <div>
@@ -113,6 +131,12 @@ export function CareerPreferencesSection({
               </option>
             ))}
           </select>
+
+          {fieldErrors.remotePreference && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.remotePreference}
+            </p>
+          )}
         </div>
       </div>
     </div>

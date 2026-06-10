@@ -1,7 +1,13 @@
-export type ApiErrorResponse = {
-  status?: string;
+export type ApiFieldError = {
+  path?: string;
+  field?: string;
   message?: string;
-  errors?: Record<string, string>;
+};
+
+export type ApiErrorResponse = {
+  status?: "success" | "error" | "fail";
+  message?: string;
+  errors?: ApiFieldError[] | Record<string, string>;
 };
 
 export type NormalizedApiError = {

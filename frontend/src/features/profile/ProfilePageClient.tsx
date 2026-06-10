@@ -29,6 +29,7 @@ export function ProfilePageClient() {
 
     message,
     errorMessage,
+    fieldErrors,
     shouldShowForm,
     skillsErrorMessage,
 
@@ -115,18 +116,20 @@ export function ProfilePageClient() {
             <BasicInformationSection
               formState={formState}
               onChange={updateFormField}
+              fieldErrors={fieldErrors}
             />
 
             <CareerPreferencesSection
               formState={formState}
               onChange={updateFormField}
+              fieldErrors={fieldErrors}
             />
           </div>
 
           <SkillsSection
             formState={formState}
             onChange={updateFormField}
-            errorMessage={skillsErrorMessage}
+            errorMessage={skillsErrorMessage ?? fieldErrors.skills}
           />
 
           <CareerGoalsSection

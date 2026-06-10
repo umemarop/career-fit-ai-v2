@@ -49,6 +49,7 @@ export function useProfilePage() {
 
   const [message, setMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const shouldShowForm = !profile || isEditing;
 
@@ -73,6 +74,7 @@ export function useProfilePage() {
     try {
       setIsInitialLoading(true);
       setErrorMessage(null);
+      setFieldErrors({});
 
       const profile = await getMyProfile();
 
@@ -109,6 +111,7 @@ export function useProfilePage() {
       setHasTriedSubmit(true);
       setMessage(null);
       setErrorMessage(null);
+      setFieldErrors({});
 
       const input = formStateToUpsertProfileInput(formState);
 
@@ -121,10 +124,13 @@ export function useProfilePage() {
       setProfile(savedProfile);
       setFormState(profileToFormState(savedProfile));
       setIsEditing(false);
+      setFieldErrors({});
       showMessage("Profile saved successfully.");
     } catch (error) {
       const normalizedError = normalizeApiError(error);
+
       setErrorMessage(normalizedError.message);
+      setFieldErrors(normalizedError.fieldErrors ?? {});
     } finally {
       setIsSaving(false);
     }
@@ -147,6 +153,7 @@ export function useProfilePage() {
     setHasTriedSubmit(false);
     setMessage(null);
     setErrorMessage(null);
+    setFieldErrors({});
   };
 
   const handleOpenDeleteProfileModal = () => {
@@ -322,6 +329,7 @@ export function useProfilePage() {
     errorMessage,
     shouldShowForm,
     skillsErrorMessage,
+    fieldErrors,
 
     updateFormField,
     handleSaveProfile,

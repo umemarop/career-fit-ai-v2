@@ -3,6 +3,7 @@ import type { ExperienceLevel, WorkEligibility } from "@/types/profile.types";
 
 type BasicInformationSectionProps = {
   formState: ProfileFormState;
+  fieldErrors?: Record<string, string>;
   onChange: <K extends keyof ProfileFormState>(
     key: K,
     value: ProfileFormState[K],
@@ -32,6 +33,7 @@ const workEligibilityOptions: {
 export function BasicInformationSection({
   formState,
   onChange,
+  fieldErrors = {},
 }: BasicInformationSectionProps) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -60,6 +62,12 @@ export function BasicInformationSection({
               </option>
             ))}
           </select>
+
+          {fieldErrors.experienceLevel && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.experienceLevel}
+            </p>
+          )}
         </div>
 
         <div>
@@ -83,6 +91,12 @@ export function BasicInformationSection({
               </option>
             ))}
           </select>
+
+          {fieldErrors.workEligibility && (
+            <p className="mt-2 text-sm text-red-600">
+              {fieldErrors.workEligibility}
+            </p>
+          )}
         </div>
 
         <div>
@@ -94,6 +108,10 @@ export function BasicInformationSection({
             placeholder="Brisbane, Australia"
             className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
+
+          {fieldErrors.location && (
+            <p className="mt-2 text-sm text-red-600">{fieldErrors.location}</p>
+          )}
         </div>
       </div>
     </div>
