@@ -25,6 +25,10 @@ export function SecuritySettingsCard({
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const isSamePassword =
+    form.currentPassword.trim().length > 0 &&
+    form.password.trim().length > 0 &&
+    form.currentPassword === form.password;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -137,6 +141,11 @@ export function SecuritySettingsCard({
           <p className="mt-1 text-xs text-slate-500">
             Must be at least 8 characters and include one uppercase letter.
           </p>
+          {isSamePassword ? (
+            <p className="mt-1 text-xs font-medium text-red-600">
+              New password must be different from your current password.
+            </p>
+          ) : null}
         </div>
 
         <div>
@@ -183,7 +192,7 @@ export function SecuritySettingsCard({
         </div>
 
         <div className="mt-4">
-          <Button type="submit" disabled={isUpdating}>
+          <Button type="submit" disabled={isUpdating || isSamePassword}>
             {isUpdating ? "Updating..." : "Change password"}
           </Button>
         </div>

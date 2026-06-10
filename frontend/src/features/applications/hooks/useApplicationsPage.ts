@@ -23,6 +23,7 @@ export function useApplicationsPage() {
   const selectedApplicationIdFromUrl = searchParams.get("selected");
 
   const selectedApplicationIdRef = useRef<string | null>(null);
+  const hasHandledSelectedFromUrlRef = useRef(false);
 
   const [applications, setApplications] = useState<ApplicationListItem[]>([]);
   const [selectedApplication, setSelectedApplication] =
@@ -156,7 +157,8 @@ export function useApplicationsPage() {
   );
 
   useEffect(() => {
-    if (selectedApplicationIdFromUrl) {
+    if (selectedApplicationIdFromUrl && !hasHandledSelectedFromUrlRef.current) {
+      hasHandledSelectedFromUrlRef.current = true;
       selectedApplicationIdRef.current = selectedApplicationIdFromUrl;
 
       setPage(1);

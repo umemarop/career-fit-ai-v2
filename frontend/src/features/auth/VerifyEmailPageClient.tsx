@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle2, Loader2, XCircle } from "lucide-react";
 
@@ -19,15 +19,22 @@ export function VerifyEmailPageClient() {
   const [status, setStatus] = useState<VerifyStatus>("verifying");
   const [message, setMessage] = useState("Verifying your email...");
 
-  useEffect(() => {
-    const token = searchParams.get("token");
+  const token = searchParams.get("token");
+  const verifiedTokenRef = useRef<string | null>(null);
 
+  useEffect(() => {
     const verifyEmail = async () => {
       if (!token) {
         setStatus("error");
         setMessage("Verification link is invalid or expired.");
         return;
       }
+
+      if (verifiedTokenRef.current === token) {
+        return;
+      }
+
+      verifiedTokenRef.current = token;
 
       try {
         const response = await authService.verifyEmail(token);
@@ -43,7 +50,7 @@ export function VerifyEmailPageClient() {
     };
 
     verifyEmail();
-  }, [refreshUser, searchParams]);
+  }, [token, refreshUser]);
 
   const isVerifying = status === "verifying";
   const isSuccess = status === "success";

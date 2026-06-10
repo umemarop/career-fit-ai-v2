@@ -489,6 +489,15 @@ export const changePassword = async (
     throw new AppError("Current password is incorrect", 400);
   }
 
+  const isSamePassword = await bcrypt.compare(input.password, user.password);
+
+  if (isSamePassword) {
+    throw new AppError(
+      "New password must be different from your current password.",
+      400,
+    );
+  }
+
   const hashedPassword = await bcrypt.hash(input.password, 12);
 
   const newRefreshToken = generateRefreshToken();
