@@ -463,6 +463,22 @@ CareerFit AI v2 was rebuilt as a full-stack application and introduced:
 - Session management
 - Admin dashboard
 
+## 🔄 Evolution
+
+CareerFit AI started as a backend API project (v1) deployed on Render.
+
+While building and deploying the project, I identified several areas that could be improved, including authentication, deployment, infrastructure, and overall architecture.
+
+CareerFit AI v2 was rebuilt as a full-stack application and introduced:
+
+- Next.js frontend
+- Docker-based deployment
+- AWS EC2 hosting
+- GitHub Actions CI/CD
+- Google OAuth
+- Session management
+- Admin dashboard
+
 ---
 
 ## 🔮 Future Improvements
