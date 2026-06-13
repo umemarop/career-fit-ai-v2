@@ -78,7 +78,7 @@ app.get("/", (req, res) => {
     },
   });
 });
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/v2/auth", authRouter);
 app.use("/api/v2/sessions", sessionRoutes);

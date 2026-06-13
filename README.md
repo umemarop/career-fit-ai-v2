@@ -447,6 +447,7 @@ career-fit-ai-v2/
 ├── docker-compose.prod.yml
 └── README.md
 ```
+
 ## 🔄 Evolution
 
 CareerFit AI started as a backend API project (v1) deployed on Render.
