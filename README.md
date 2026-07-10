@@ -1,5 +1,7 @@
 # 🚀 CareerFit AI
 
+🇺🇸 English | 🇰🇷 [한국어](README_KR.md)
+
 AI-Powered Career Management Platform
 
 CareerFit AI is a full-stack SaaS application designed to help job seekers analyze job descriptions, manage resumes, track applications, and gain AI-powered career insights.
