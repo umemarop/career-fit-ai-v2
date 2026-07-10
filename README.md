@@ -1,6 +1,6 @@
 # 🚀 CareerFit AI
 
-🇺🇸 English | 🇰🇷 [한국어](README_KR.md)
+**🌐 Language:** 🇺🇸 English | 🇰🇷 [한국어](README_KR.md)
 
 AI-Powered Career Management Platform
 
